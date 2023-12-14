@@ -7,10 +7,14 @@ use App\Models\Appointment;
 use App\Models\Contact;
 use App\Models\FacilityType;
 use App\Models\Facilty;
+use App\Models\Noteable;
+use App\Traits\HasDynamicInput;
 use Livewire\Component;
 
 class Facility extends Component
 {
+
+    use HasDynamicInput;
 
     /**
      * Parent
@@ -41,6 +45,15 @@ class Facility extends Component
         $this->facility_types = FacilityType::active()->available()->get();
         $this->contacts = Contact::available()->get();
 
+        $this->defineInputs(fn() => [
+            'notes' => [
+                [
+                    'id' => null,
+                    'note' => ''
+                ]
+            ]
+        ]);
+
         if ($this->mode == PageModeEnum::EDIT) {
             $this->name = $this->facility->name;
             $this->telephone = $this->facility->telephone;
@@ -52,10 +65,23 @@ class Facility extends Component
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
+            $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
+                'id' => $note->id,
+                'note' => $note->text
+            ])->toArray() ?: [
+                [
+                    'id' => null,
+                    'note' => ''
+                ]
+            ];
         } else {
             $this->contact = $this->contacts->first()?->id;
             $this->facility_type = $this->facility_types->first()?->id;
+            $this->fillInputs();
         }
+
+        // dd($this->inputs['notes']);
+
     }
 
     public function updatedTeleAppointment()
@@ -70,9 +96,27 @@ class Facility extends Component
         return view('livewire.users.org.facility');
     }
 
+    public function validationAttributes()
+    {
+        return [
+            'inputs.notes.*.note' => 'note'
+        ];
+    }
+
+
+    public function handleBeforeInputRemove($key, $group)
+    {
+        if ($group == 'notes') {
+            $note = $this->inputs['notes'][$key];
+            $id = array_key_exists('id', $note) ? $note['id'] : '';
+            $id ? Noteable::find($id)->delete() : '';
+        }
+    }
+
+
     public function store()
     {
-        $this->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'telephone' => 'nullable|string|max:20',
             'street' => 'nullable|string|max:255',
@@ -83,7 +127,15 @@ class Facility extends Component
             'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
-        ]);
+        ];
+
+        $this->validate(
+            array_merge($rules, $this->inputRules([
+                'notes' => [
+                    'note' => ['required']
+                ]
+            ]))
+        );
 
         $data = [
             'name' => $this->name,
@@ -99,14 +151,19 @@ class Facility extends Component
         ];
 
 
-        Facilty::create($data);
+        $facility = Facilty::create($data);
+        foreach ($this->inputs['notes'] as $note) {
+            $facility->notes()->create([
+                'text' => $note['note']
+            ]);
+        }
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
     }
 
     public function edit()
     {
-        $this->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'telephone' => 'nullable|string|max:20',
             'street' => 'nullable|string|max:255',
@@ -117,7 +174,12 @@ class Facility extends Component
             'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
-        ]);
+        ];
+        $this->validate(array_merge($rules, $this->inputRules([
+            'notes' => [
+                'note' => ['required']
+            ]
+        ])));
 
         $data = [
             'name' => $this->name,
@@ -134,6 +196,16 @@ class Facility extends Component
 
 
         $this->facility->update($data);
+        // dd($this->inputs['notes']);
+        foreach ($this->inputs['notes'] as $note) {
+            $this->facility->notes()->updateOrCreate(
+                [
+                    'id' => $note['id']
+                ],
+                [
+                'text' => $note['note']
+            ]);
+        }
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
     }
