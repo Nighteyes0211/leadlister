@@ -77,6 +77,24 @@
                 @endforeach
             </x-bootstrap.form.select>
 
+
+            @foreach ($inputs['notes'] as $key => $contact)
+                <div>
+                    <x-bootstrap.form.input type='tel' label='Note {{ $key + 1 }}'
+                        name='inputs.notes.{{ $key }}.note'>
+                        <div class="mb-3 mt-2">
+                            <button class="btn btn-dark" id="noteid-{{ $key }}-add" type="button"
+                                wire:click="add('notes')">Add</button>
+                            @if ($key > 0)
+                                <button class="btn btn-danger" id="noteid-{{ $key }}-delete" type='button'
+                                    wire:click="remove({{ $key }}, 'notes')">Remove</button>
+                            @endif
+                        </div>
+                    </x-bootstrap.form.input>
+                </div>
+            @endforeach
+
+
             <x-bootstrap.form.button>Submit</x-bootstrap.form.button>
         </x-bootstrap.form>
     </x-bootstrap.card>

@@ -27,6 +27,14 @@ class Facilty extends Model
     }
 
     /**
+     * Relationship
+     */
+    public function notes()
+    {
+        return $this->morphMany(Noteable::class, 'notable');
+    }
+
+    /**
      * Soft delete model
      */
     public function softDelete()
