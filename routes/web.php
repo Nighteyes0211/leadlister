@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\Organization\BranchController;
 use App\Http\Controllers\Organization\ContactController;
 use App\Http\Controllers\Organization\DashboardController;
 use App\Http\Controllers\Organization\RoleController;
@@ -66,6 +67,15 @@ Route::prefix('dashboard/o/')
                 Route::get('/', [FacilityController::class, 'index'])->name('index');
                 Route::get('create', [FacilityController::class, 'create'])->name('create');
                 Route::get('{id}/edit', [FacilityController::class, 'edit'])->name('edit');
+            });
+
+        # Branch
+        Route::prefix('branch')
+            ->name('branch.')
+            ->group(function () {
+                Route::get('/', [BranchController::class, 'index'])->name('index');
+                Route::get('create', [BranchController::class, 'create'])->name('create');
+                Route::get('{branch:id}/edit', [BranchController::class, 'edit'])->name('edit');
             });
 
         # Calendar

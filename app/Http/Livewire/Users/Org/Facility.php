@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users\Org;
 
 use App\Enum\PageModeEnum;
 use App\Models\Appointment;
+use App\Models\Branch;
 use App\Models\Contact;
 use App\Models\FacilityType;
 use App\Models\Facilty;
@@ -24,7 +25,7 @@ class Facility extends Component
     /**
      * Collection
      */
-    public $facility_types, $contacts;
+    public $facility_types, $contacts, $branches;
 
     public $name;
     public $telephone;
@@ -37,13 +38,14 @@ class Facility extends Component
     public $tele_appointment = false;
     public $info_material = false;
 
-    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date;
+    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $branch;
 
     public function mount()
     {
 
         $this->facility_types = FacilityType::active()->available()->get();
         $this->contacts = Contact::available()->get();
+        $this->branches = Branch::available()->get();
 
         $this->defineInputs(fn() => [
             'notes' => [
@@ -65,6 +67,7 @@ class Facility extends Component
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
+            $this->branch = $this->branches->first()?->id;
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
                 'note' => $note->text
@@ -127,6 +130,7 @@ class Facility extends Component
             'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
+            'branch' => 'required',
         ];
 
         $this->validate(
@@ -148,6 +152,7 @@ class Facility extends Component
             'contact_id' => $this->contact,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
+            'branch_id' => $this->branch,
         ];
 
 
@@ -174,6 +179,7 @@ class Facility extends Component
             'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
+            'branch' => 'required',
         ];
         $this->validate(array_merge($rules, $this->inputRules([
             'notes' => [
@@ -192,6 +198,7 @@ class Facility extends Component
             'contact_id' => $this->contact,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
+            'branch_id' => $this->branch,
         ];
 
 

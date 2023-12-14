@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Users\Org\Index;
 
-use App\Models\Facilty;
+use App\Models\Branch as ModelsBranch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -11,37 +11,42 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
-class Facility extends DataTableComponent
+class Branch extends DataTableComponent
 {
+
     protected $listeners = ['recordDeletionConfirmed' => 'delete'];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
-        $this->setAdditionalSelects(['facilties.id as id']);
+        $this->setAdditionalSelects(['branches.id as id']);
     }
 
     public function builder(): Builder
     {
-        return Facilty::available();
+        return ModelsBranch::available();
     }
 
-    public function columns() : array
+    public function columns(): array
     {
         return [
-            Column::make('Name')
-                ->sortable()
-                ->searchable(),
-            Column::make('Branch', 'branch.name')
-                ->sortable()
-                ->searchable(),
+            Column::make('Name', 'name')->searchable(),
+            Column::make('Street')->searchable(),
+            Column::make('Zip')->searchable(),
+            Column::make('Location')->searchable(),
+            Column::make('Contact')->searchable(),
             ButtonGroupColumn::make('Actions')
+                ->attributes(function ($row) {
+                    return [
+                        'class' => 'space-x-2',
+                    ];
+                })
                 ->buttons([
                     LinkColumn::make('Edit') // make() has no effect in this case but needs to be set anyway
                         ->title(fn ($row) => 'Eidt')
-                        ->location(fn($row) => route('organization.facility.edit', $row))
+                        ->location(fn($row) => route('organization.branch.edit', $row->id))
                         ->attributes(function ($row) {
-                            $hideClass = !Auth::user()->can('facility:edit') ? 'd-none' : '';
+                            $hideClass = !Auth::user()->can('branch:edit') ? 'd-none' : '';
                             return [
                                 'class' => "btn {$hideClass} btn-sm btn-info",
                             ];
@@ -50,7 +55,7 @@ class Facility extends DataTableComponent
                         ->title(fn ($row) => 'Delete')
                         ->location(fn($row) => "#")
                         ->attributes(function ($row) {
-                            $hideClass = !Auth::user()->can('facility:delete') ? 'd-none' : '';
+                            $hideClass = !Auth::user()->can('branch:delete') ? 'd-none' : '';
                             return [
                                 'class' => "btn {$hideClass} btn-sm btn-danger",
                                 'wire:click' => "deleteConfirmation({$row->id})"
@@ -69,7 +74,7 @@ class Facility extends DataTableComponent
     public function delete(int $record_id)
     {
 
-        $record = Facilty::find($record_id);
+        $record = ModelsBranch::find($record_id);
         $record->softDelete();
 
     }

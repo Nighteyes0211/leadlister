@@ -71,6 +71,11 @@
                     <option value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
+            <x-bootstrap.form.select name="branch" label="Branch">
+                @foreach ($branches as $singleBranch)
+                    <option value="{{ $singleBranch->id }}">{{ $singleBranch->name }}</option>
+                @endforeach
+            </x-bootstrap.form.select>
             <x-bootstrap.form.select name="contact" label="Contact">
                 @foreach ($contacts as $singleContact)
                     <option value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>

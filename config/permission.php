@@ -207,6 +207,12 @@ return [
             'contact:create',
             'contact:edit',
             'contact:delete',
+        ],
+        'branch' => [
+            'branch:index',
+            'branch:create',
+            'branch:edit',
+            'branch:delete',
         ]
     ]
 ];

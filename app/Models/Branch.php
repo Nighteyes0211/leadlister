@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Enum\Branch\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Facilty extends Model
+class Branch extends Model
 {
     use HasFactory;
 
@@ -27,19 +28,6 @@ class Facilty extends Model
     }
 
     /**
-     * Relationship
-     */
-    public function notes()
-    {
-        return $this->morphMany(Noteable::class, 'notable');
-    }
-
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
-
-    /**
      * Soft delete model
      */
     public function softDelete()
@@ -55,9 +43,14 @@ class Facilty extends Model
     /**
      * Scopes
      */
+    public function scopeactive($query)
+    {
+        return $query->where('status', StatusEnum::ACTIVE);
+    }
+
     public function scopeavailable($query)
     {
-        return $query->where('facilties.is_deleted', false);
+        return $query->where('is_deleted', false);
     }
 
 }
