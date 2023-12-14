@@ -4,8 +4,10 @@ namespace App\Http\Livewire\Users\Org;
 
 use App\Enum\Contact\StatusEnum;
 use App\Enum\PageModeEnum;
+use App\Mail\User\NewAppointment;
 use App\Models\Contact as ModelsContact;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Contact extends Component
@@ -88,6 +90,12 @@ class Contact extends Component
             'user_id' => $this->assign_to,
         ]);
 
+
+        if ($this->assign_to != auth()->user()->id)
+        {
+            Mail::to(User::find($this->assign_to))->send(new NewAppointment());
+        }
+
         return redirect()->route('organization.contact.index');
     }
 
@@ -109,6 +117,12 @@ class Contact extends Component
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
         ]);
 
+
+        if ($this->contact->user_id != $this->assign_to)
+        {
+            Mail::to(User::find($this->contact->user_id))->send(new NewAppointment());
+        }
+
         $this->contact->update([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -128,5 +142,5 @@ class Contact extends Component
 
         return redirect()->route('organization.contact.index');
     }
-    
+
 }
