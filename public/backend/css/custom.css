@@ -1,0 +1,121 @@
+.inline-filter {
+    background-color: #0e170e;
+}
+
+.inline-filter .btn-prev-long {
+    left: 30px;
+}
+
+.inline-filter .btn-next-long {
+    right: 30px;
+}
+
+.inline-filter .filter {
+    position: relative;
+    cursor: pointer;
+}
+
+.inline-filter .filter .img {
+    height: 0;
+    position: relative;
+    padding-bottom: 100%;
+    background-position: center center;
+    background-size: cover;
+}
+
+.inline-filter .filter .img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-color: black;
+    opacity: 0.7;
+    z-index: 1;
+    border-radius: inherit;
+    transition: all 0.5s;
+}
+
+.inline-filter .filter .filter-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition: all 0.5s;
+}
+
+.inline-filter .filter.active,
+.inline-filter .filter:hover {
+    background-color: var(--primary-bg-color) !important;
+}
+
+.inline-filter .filter.active .img::before,
+.inline-filter .filter:hover .img::before {
+    background-color: var(--primary-bg-color);
+}
+
+.inline-filter .filter.active .filter-name,
+.inline-filter .filter:hover .filter-name {
+    color: black !important;
+}
+
+.inline-filter .custom-pagination {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(50%);
+    z-index: 10000;
+}
+
+.inline-filter .pag-btn {
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.inline-filter .pag-btn.custom-btn-next {
+    position: absolute;
+    right: 0;
+}
+
+.inline-filter .pag-btn.custom-btn-prev {
+    position: absolute;
+    left: 0;
+}
+
+.inline-filter .filter {
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.inline-filter .filter.active {
+    background-color: var(--primary-bg-color);
+}
+
+.inline-filter .img {
+    background-image: none !important;
+    padding: 0 !important;
+    height: unset !important;
+    display: none !important;
+}
+
+.inline-filter .filter-name {
+    position: static !important;
+    transform: unset !important;
+    margin-bottom: 0;
+}
+
+.inline-filter.swiper-btn-lr .btn-prev-long,
+.inline-filter.swiper-btn-lr .btn-next-long {
+    top: 80%;
+}
