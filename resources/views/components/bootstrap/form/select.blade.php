@@ -20,7 +20,7 @@
 
 
         <div class="col-sm-12 col-md-7">
-            <select {!! $attributes->merge(['class' => "form-control $errorClass"]) !!} {!! $wire ? "wire:model='$name'" : "name='$name'" !!}>
+            <select id="{{ $name }}" {!! $attributes->merge(['class' => "form-control $errorClass"]) !!} {!! $wire ? "wire:model='$name'" : "name='$name'" !!}>
                 @if ($slot->isEmpty())
                     <option disabled>No record</option>
                 @else
@@ -40,7 +40,7 @@
 
         </div>
     @else
-        <select {!! $attributes->merge(['class' => "form-control $errorClass"]) !!} {!! $wire ? "wire:model='$name'" : "name='$name'" !!}>
+        <select id="{{ $name }}" {!! $attributes->merge(['class' => "form-control $errorClass"]) !!} {!! $wire ? "wire:model='$name'" : "name='$name'" !!}>
             @if ($slot->isEmpty())
                 <option disabled>No record</option>
             @else

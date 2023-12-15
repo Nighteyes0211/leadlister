@@ -67,7 +67,7 @@ class Facility extends Component
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
-            $this->branch = $this->branches->first()?->id;
+            $this->branch = $this->facility->branch_id ?: $this->branches->first()?->id;
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
                 'note' => $note->text
@@ -80,6 +80,7 @@ class Facility extends Component
         } else {
             $this->contact = $this->contacts->first()?->id;
             $this->facility_type = $this->facility_types->first()?->id;
+            $this->branch = $this->branches->first()?->id;
             $this->fillInputs();
         }
 

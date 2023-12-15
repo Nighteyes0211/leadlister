@@ -68,7 +68,7 @@
 
             <x-bootstrap.form.select name="facility_type" label="Facility Type">
                 @foreach ($facility_types as $singleFacilityType)
-                    <option value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
+                    <option  value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
             <x-bootstrap.form.select name="branch" label="Branch">
@@ -76,11 +76,19 @@
                     <option value="{{ $singleBranch->id }}">{{ $singleBranch->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
-            <x-bootstrap.form.select name="contact" label="Contact">
-                @foreach ($contacts as $singleContact)
-                    <option value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
-                @endforeach
-            </x-bootstrap.form.select>
+            <div>
+                <div wire:ignore>
+                    <x-bootstrap.form.select name="contact" class="sumoselect" label="Contact">
+                        @foreach ($contacts as $singleContact)
+                            <option {{ $singleContact->id == $facility?->contact_id ? 'selected' : '' }} value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
+                        @endforeach
+                    </x-bootstrap.form.select>
+                </div>
+
+                @error('contact')
+                    <p class="text-danger small">{{ $message }}</p>
+                @enderror
+            </div>
 
 
             @foreach ($inputs['notes'] as $key => $contact)
@@ -103,4 +111,15 @@
             <x-bootstrap.form.button>Submit</x-bootstrap.form.button>
         </x-bootstrap.form>
     </x-bootstrap.card>
+
+
+    <script>
+        document.addEventListener("livewire:load", function () {
+
+            $('#contact').change(() => {
+                @this.set('contact', $('#contact option:selected').val(), true)
+            })
+
+        })
+    </script>
 </div>
