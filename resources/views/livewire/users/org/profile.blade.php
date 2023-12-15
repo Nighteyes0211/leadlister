@@ -25,6 +25,36 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-3 d-flex align-items-center">
+                    <x-bootstrap.form.checkbox :col="false" name="is_absent"
+                        label="Is absent?"></x-bootstrap.form.checkbox>
+                </div>
+                <div class="col-lg-3">
+                    <x-bootstrap.form.input type="datetime-local" :col="false" name="absent_from"
+                        label="Absent from"></x-bootstrap.form.input>
+                </div>
+                <div class="col-lg-3">
+                    <x-bootstrap.form.input type="datetime-local" :col="false" name="absent_to"
+                        label="Absent to"></x-bootstrap.form.input>
+                </div>
+                <div class="col-lg-3">
+                    <div>
+                        <div wire:ignore>
+                            <x-bootstrap.form.select :col="false" name="substitution_user" class="sumoselect" label="Substitution">
+                                @foreach ($users as $singleUser)
+                                    <option {{ $singleUser->id == auth()->user()->substitution_handler ? 'selected' : '' }} value="{{ $singleUser->id }}">{{ $singleUser->fullName() }}</option>
+                                @endforeach
+                            </x-bootstrap.form.select>
+                        </div>
+
+                        @error('substitution_user')
+                            <p class="text-danger small">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
 
             <div class="mt-4 d-flex justify-content-end gap-2 align-items-center" >
                 <x-bootstrap.button size="md" class="mb-4" color="secondary" href="{{ route('organization.dashboard') }}">Back</x-bootstrap.button>
@@ -35,10 +65,12 @@
     </x-bootstrap.card>
 
     <script>
-        window.addEventListener('livewire:load', function() {
-            $("#contact").change(function() {
-                @this.contact = $("#contact").val()
+        document.addEventListener("livewire:load", function () {
+
+            $('#substitution_user').change(() => {
+                @this.set('substitution_user', $('#substitution_user option:selected').val(), true)
             })
+
         })
     </script>
 </div>

@@ -6,6 +6,8 @@ use App\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Section;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +24,16 @@ class DashboardController extends Controller
 
     public function calendar()
     {
-        $appointments = Appointment::where('user_id', auth()->id())->get();
+        $startDate = now()->startOfDay();
+        $endDate = now()->endOfDay();
+
+        $other_users = User::where('is_absent', true)
+                            ->where(fn ($query) => $query->where('absent_from', '<=', $startDate)->orWhere('absent_to', '>=', $endDate))
+                            ->where('substitution_handler', auth()->id())
+                            ->get()
+                            ->pluck('id')
+                            ->toArray();
+        $appointments = Appointment::where(fn ($query) => $query->where('user_id', auth()->id())->orWhereIn('user_id', $other_users))->get();
 
         // id: '1',
         // start: curYear + '-' + curMonth + '-02T09:00:00',
@@ -40,6 +51,7 @@ class DashboardController extends Controller
                 'contact' => $appointment->contact,
                 'appointment_start_time' => parseDate($appointment->start_date, 'M j, Y h:i A'),
                 'appointment_end_time' => parseDate($appointment->end_date, 'M j, Y h:i A'),
+                'user' => $appointment->user->fullName()
             ];
         });
 

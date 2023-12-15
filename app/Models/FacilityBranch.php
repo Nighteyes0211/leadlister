@@ -2,20 +2,15 @@
 
 namespace App\Models;
 
-use App\Enum\Appointment\StatusEnum;
+use App\Enum\FacilityBranch\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Appointment extends Model
+class FacilityBranch extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
 }

@@ -25,7 +25,7 @@ class Facility extends Component
     /**
      * Collection
      */
-    public $facility_types, $contacts, $branches;
+    public $facility_types, $contacts;
 
     public $name;
     public $telephone;
@@ -38,22 +38,32 @@ class Facility extends Component
     public $tele_appointment = false;
     public $info_material = false;
 
-    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $branch;
+    // Appointment
+    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date;
+
+    // Branch
+    public $branch_name, $branch_street, $branch_housing_number, $branch_zip, $branch_location, $branch_contact;
+    public $facility_branches = [];
 
     public function mount()
     {
 
         $this->facility_types = FacilityType::active()->available()->get();
         $this->contacts = Contact::available()->get();
-        $this->branches = Branch::available()->get();
 
+        // $this->name = $this->branch->name;
+        // $this->street = $this->branch->street;
+        // $this->housing_number = $this->branch->housing_number;
+        // $this->zip = $this->branch->zip;
+        // $this->location = $this->branch->location;
+        // $this->contact = $this->branch->contact;
         $this->defineInputs(fn() => [
             'notes' => [
                 [
                     'id' => null,
                     'note' => ''
                 ]
-            ]
+            ],
         ]);
 
         if ($this->mode == PageModeEnum::EDIT) {
@@ -67,7 +77,6 @@ class Facility extends Component
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
-            $this->branch = $this->facility->branch_id ?: $this->branches->first()?->id;
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
                 'note' => $note->text
@@ -77,10 +86,19 @@ class Facility extends Component
                     'note' => ''
                 ]
             ];
+            $this->facility_branches = $this->facility->branches->map(fn ($branch) => [
+                'id' => $branch->id,
+                'name' => $branch->name,
+                'street' => $branch->street,
+                'housing_number' => $branch->housing_number,
+                'zip' => $branch->zip,
+                'location' => $branch->location,
+                'contact' => $branch->contact_id,
+            ])->toArray() ?: [];
+
         } else {
             $this->contact = $this->contacts->first()?->id;
             $this->facility_type = $this->facility_types->first()?->id;
-            $this->branch = $this->branches->first()?->id;
             $this->fillInputs();
         }
 
@@ -131,7 +149,6 @@ class Facility extends Component
             'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
-            'branch' => 'required',
         ];
 
         $this->validate(
@@ -153,11 +170,20 @@ class Facility extends Component
             'contact_id' => $this->contact,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
-            'branch_id' => $this->branch,
         ];
 
 
         $facility = Facilty::create($data);
+        foreach ($this->facility_branches as $branch) {
+            $facility->branches()->create([
+                'name' => $branch['name'],
+                'street' => $branch['street'],
+                'housing_number' => $branch['housing_number'],
+                'zip' => $branch['zip'],
+                'location' => $branch['location'],
+                'contact' => $branch['contact'],
+            ]);
+        }
         foreach ($this->inputs['notes'] as $note) {
             if ($note['note'])
             {
@@ -183,7 +209,6 @@ class Facility extends Component
             'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
-            'branch' => 'required',
         ];
         $this->validate(array_merge($rules, $this->inputRules([
             'notes' => [
@@ -202,12 +227,25 @@ class Facility extends Component
             'contact_id' => $this->contact,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
-            'branch_id' => $this->branch,
         ];
 
 
         $this->facility->update($data);
-        // dd($this->inputs['notes']);
+        foreach ($this->facility_branches as $branch) {
+
+            $this->facility->branches()->updateOrCreate(
+                [
+                    'id' => $branch['id']
+                ],
+                [
+                'name' => $branch['name'],
+                'street' => $branch['street'],
+                'housing_number' => $branch['housing_number'],
+                'zip' => $branch['zip'],
+                'location' => $branch['location'],
+                'contact' => $branch['contact'],
+            ]);
+        }
         foreach ($this->inputs['notes'] as $note) {
             if ($note['note'])
             {
@@ -222,6 +260,32 @@ class Facility extends Component
         }
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
+    }
+
+    public function addBranch()
+    {
+
+        $this->validate([
+            'branch_name' => 'required|string|max:255',
+            'branch_street' => 'required|string|max:255',
+            'branch_housing_number' => 'required|string|max:20',
+            'branch_zip' => 'required|string|max:20',
+            'branch_location' => 'required|string|max:255',
+            'branch_contact' => 'nullable',
+        ]);
+
+        $this->facility_branches[] = [
+            'id' => null,
+            'name' => $this->branch_name,
+            'street' => $this->branch_street,
+            'housing_number' => $this->branch_housing_number,
+            'zip' => $this->branch_zip,
+            'location' => $this->branch_location,
+            'contact' => $this->branch_contact,
+        ];
+
+        $this->reset('branch_name', 'branch_street', 'branch_housing_number', 'branch_zip', 'branch_location', 'branch_contact');
+        $this->emit('closeModal', 'branch_modal');
     }
 
     public function createAppointment()

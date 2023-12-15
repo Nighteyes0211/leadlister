@@ -41,6 +41,47 @@
     </div>
 
 
+
+
+    <!-- Modal -->
+    <div wire:ignore.self class="modal fade" id="branch_modal" tabindex="-1" role="dialog"
+        aria-labelledby="branch_modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="branch_modalTitleId">
+                        Add branch
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <x-bootstrap.form method="addBranch">
+                    <div class="modal-body">
+
+
+                        <x-bootstrap.form.input name="branch_name" label="Name" />
+                        <x-bootstrap.form.input name="branch_street" label="Street" />
+                        <x-bootstrap.form.input name="branch_housing_number" label="Housing number" />
+                        <x-bootstrap.form.input name="branch_zip" label="ZIP" />
+                        <x-bootstrap.form.input name="branch_location" label="Location" />
+                        <x-bootstrap.form.input name="branch_contact" label="Contact" />
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Add branch</button>
+                    </div>
+                </x-bootstrap.form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
     <x-bootstrap.card>
         <x-bootstrap.form method="{{ $mode == PageModeEnum::CREATE ? 'store' : 'edit' }}">
             <x-bootstrap.form.input name="name" label="Name" />
@@ -71,11 +112,29 @@
                     <option  value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
-            <x-bootstrap.form.select name="branch" label="Branch">
+
+            {{-- <x-bootstrap.form.select name="branch" label="Branch">
                 @foreach ($branches as $singleBranch)
                     <option value="{{ $singleBranch->id }}">{{ $singleBranch->name }}</option>
                 @endforeach
-            </x-bootstrap.form.select>
+            </x-bootstrap.form.select> --}}
+
+
+            <div class="row mb-3">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Branches</label>
+                <div class="col-sm-12 col-md-7">
+                    @foreach ($facility_branches as $singleBranch )
+                        <p>{{ $singleBranch['name'] }}</p>
+                    @endforeach
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-md" id="branch_modal-opener" data-bs-toggle="modal"
+                        data-bs-target="#branch_modal">
+                        Add branch
+                    </button>
+                </div>
+            </div>
+
             <div>
                 <div wire:ignore>
                     <x-bootstrap.form.select name="contact" class="sumoselect" label="Contact">

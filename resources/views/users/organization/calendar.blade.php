@@ -47,6 +47,7 @@
                     {{-- $table->string('name');
             $table->string('contact'); --}}
 
+                    <p>User: <span id="user"></span></p>
                     <p>Name: <span id="name"></span></p>
                     <p>Contact: <span id="contact"></span></p>
                     <p>Start: <span id="start"></span></p>
@@ -130,11 +131,12 @@
                 },
                 eventClick: function(arg) {
 
+                    modal.find("#user").text(arg.event._def.extendedProps.user);
                     modal.find("#name").text(arg.event._def.title);
                     modal.find("#contact").text(arg.event._def.extendedProps.contact);
                     modal.find("#start").text(arg.event._def.extendedProps.appointment_start_time);
                     modal.find("#end").text(arg.event._def.extendedProps.appointment_end_time);
-                    
+
                     modalOpener.click();
 
                     console.log(arg.event);

@@ -24,9 +24,9 @@
 
 </x-dayone.nav.parent-item>
 
-<x-dayone.nav.parent-item iconClass="fa fa-location-arrow" :hrefs="['organization.branch.*']" label="Branch">
+{{-- <x-dayone.nav.parent-item iconClass="fa fa-location-arrow" :hrefs="['organization.branch.*']" label="Branch">
 
     <x-dayone.nav.sub-item action="branch:index" href="{{ route('organization.branch.index') }}">Show all</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="branch:create" href="{{ route('organization.branch.create') }}">Create</x-dayone.nav.sub-item>
 
-</x-dayone.nav.parent-item>
+</x-dayone.nav.parent-item> --}}

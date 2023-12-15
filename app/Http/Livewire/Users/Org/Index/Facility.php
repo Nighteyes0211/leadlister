@@ -32,9 +32,6 @@ class Facility extends DataTableComponent
             Column::make('Name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Branch', 'branch.name')
-                ->sortable()
-                ->searchable(),
             ButtonGroupColumn::make('Actions')
                 ->buttons([
                     LinkColumn::make('Edit') // make() has no effect in this case but needs to be set anyway

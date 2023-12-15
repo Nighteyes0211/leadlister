@@ -34,9 +34,9 @@ class Facilty extends Model
         return $this->morphMany(Noteable::class, 'notable');
     }
 
-    public function branch()
+    public function branches()
     {
-        return $this->belongsTo(Branch::class);
+        return $this->hasMany(FacilityBranch::class);
     }
 
     /**
