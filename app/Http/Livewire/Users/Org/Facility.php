@@ -137,7 +137,7 @@ class Facility extends Component
         $this->validate(
             array_merge($rules, $this->inputRules([
                 'notes' => [
-                    'note' => ['required']
+                    'note' => ['max:200']
                 ]
             ]))
         );
@@ -159,9 +159,12 @@ class Facility extends Component
 
         $facility = Facilty::create($data);
         foreach ($this->inputs['notes'] as $note) {
-            $facility->notes()->create([
-                'text' => $note['note']
-            ]);
+            if ($note['note'])
+            {
+                $facility->notes()->create([
+                    'text' => $note['note']
+                ]);
+            }
         }
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
@@ -184,7 +187,7 @@ class Facility extends Component
         ];
         $this->validate(array_merge($rules, $this->inputRules([
             'notes' => [
-                'note' => ['required']
+                'note' => ['nullable', 'max:200']
             ]
         ])));
 
@@ -206,13 +209,16 @@ class Facility extends Component
         $this->facility->update($data);
         // dd($this->inputs['notes']);
         foreach ($this->inputs['notes'] as $note) {
-            $this->facility->notes()->updateOrCreate(
-                [
-                    'id' => $note['id']
-                ],
-                [
-                'text' => $note['note']
-            ]);
+            if ($note['note'])
+            {
+                $this->facility->notes()->updateOrCreate(
+                    [
+                        'id' => $note['id']
+                    ],
+                    [
+                    'text' => $note['note']
+                ]);
+            }
         }
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
