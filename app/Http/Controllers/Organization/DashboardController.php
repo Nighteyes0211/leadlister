@@ -34,10 +34,12 @@ class DashboardController extends Controller
         $appointments = $appointments->map(function ($appointment) {
             return [
                 'id' => $appointment->id,
-                'title' => $appointment->name . ' - ' . $appointment->contact,
+                'title' => $appointment->name,
                 'start' => $appointment->start_date,
                 'end' => $appointment->end_date,
-                'description' => $appointment->contact,
+                'contact' => $appointment->contact,
+                'appointment_start_time' => parseDate($appointment->start_date, 'M j, Y h:i A'),
+                'appointment_end_time' => parseDate($appointment->end_date, 'M j, Y h:i A'),
             ];
         });
 

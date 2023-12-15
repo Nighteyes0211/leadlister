@@ -6,6 +6,67 @@
         </x-slot>
     </x-dayone.page.header>
 
+    <!-- Button trigger modal -->
+    <button
+        type="button"
+        class="btn btn-primary btn-lg d-none"
+        id="open-appointment-detail"
+        data-bs-toggle="modal"
+        data-bs-target="#appointment-detail"
+    >
+        Open appointment
+    </button>
+
+    <!-- Modal -->
+    <div
+        class="modal fade"
+        id="appointment-detail"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="appointmentTitle"
+        aria-hidden="true"
+    >
+        <div
+            class="modal-dialog modal-lg "
+            role="document"
+        >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentTitle">
+                        Appointment Details
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+
+                    {{-- $table->string('name');
+            $table->string('contact'); --}}
+
+                    <p>Name: <span id="name"></span></p>
+                    <p>Contact: <span id="contact"></span></p>
+                    <p>Start: <span id="start"></span></p>
+                    <p>End: <span id="end"></span></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="card">
         <div class="card-body">
             <div id="calendar" class="position-sticky"></div>
@@ -22,6 +83,9 @@
             'use strict'
             var curYear = moment().format('YYYY');
             var curMonth = moment().format('MM');
+            let modalOpener = $("#open-appointment-detail");
+            let modal = $("#appointment-detail")
+
             // Calendar Event Source
             var appointments = {
                 id: 1,
@@ -65,9 +129,18 @@
                     calendar.unselect()
                 },
                 eventClick: function(arg) {
-                    if (confirm('Are you sure you want to delete this event?')) {
-                    arg.event.remove()
-                    }
+
+                    modal.find("#name").text(arg.event._def.title);
+                    modal.find("#contact").text(arg.event._def.extendedProps.contact);
+                    modal.find("#start").text(arg.event._def.extendedProps.appointment_start_time);
+                    modal.find("#end").text(arg.event._def.extendedProps.appointment_end_time);
+                    
+                    modalOpener.click();
+
+                    console.log(arg.event);
+                    // if (confirm('Are you sure you want to delete this event?')) {
+                    // arg.event.remove()
+                    // }
                 },
                 editable: true,
                     eventSources: [appointments],
