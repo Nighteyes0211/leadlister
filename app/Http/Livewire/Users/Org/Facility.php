@@ -33,7 +33,7 @@ class Facility extends Component
     public $house_number;
     public $zip_code;
     public $location;
-    public $contact;
+    public $contact = [];
     public $facility_type;
     public $tele_appointment = false;
     public $info_material = false;
@@ -73,7 +73,7 @@ class Facility extends Component
             $this->house_number = $this->facility->house_number;
             $this->zip_code = $this->facility->zip_code;
             $this->location = $this->facility->location;
-            $this->contact = $this->facility->contact_id;
+            $this->contact = $this->facility->contacts->pluck('id')->toArray();
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
@@ -97,7 +97,6 @@ class Facility extends Component
             ])->toArray() ?: [];
 
         } else {
-            $this->contact = $this->contacts->first()?->id;
             $this->facility_type = $this->facility_types->first()?->id;
             $this->fillInputs();
         }
@@ -167,13 +166,14 @@ class Facility extends Component
             'zip_code' => $this->zip_code,
             'location' => $this->location,
             'facility_type_id' => $this->facility_type,
-            'contact_id' => $this->contact,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
         ];
 
 
         $facility = Facilty::create($data);
+        $facility->contacts()->attach($this->contact);
+
         foreach ($this->facility_branches as $branch) {
             $facility->branches()->create([
                 'name' => $branch['name'],
@@ -224,13 +224,13 @@ class Facility extends Component
             'zip_code' => $this->zip_code,
             'location' => $this->location,
             'facility_type_id' => $this->facility_type,
-            'contact_id' => $this->contact,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
         ];
 
 
         $this->facility->update($data);
+        $this->facility->contacts()->sync($this->contact);
         foreach ($this->facility_branches as $branch) {
 
             $this->facility->branches()->updateOrCreate(

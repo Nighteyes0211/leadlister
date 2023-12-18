@@ -137,9 +137,9 @@
 
             <div>
                 <div wire:ignore>
-                    <x-bootstrap.form.select name="contact" class="sumoselect" label="Contact">
+                    <x-bootstrap.form.select name="contact" class="sumoselect" label="Contact" multiple>
                         @foreach ($contacts as $singleContact)
-                            <option {{ $singleContact->id == $facility?->contact_id ? 'selected' : '' }} value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
+                            <option {{ in_array($singleContact->id, $facility?->contacts?->pluck('id')->toArray() ?: []) ? 'selected' : '' }} value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
                         @endforeach
                     </x-bootstrap.form.select>
                 </div>
@@ -176,7 +176,7 @@
         document.addEventListener("livewire:load", function () {
 
             $('#contact').change(() => {
-                @this.set('contact', $('#contact option:selected').val(), true)
+                @this.set('contact', $('#contact').val(), true)
             })
 
         })

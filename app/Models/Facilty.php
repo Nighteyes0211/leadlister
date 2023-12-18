@@ -39,6 +39,11 @@ class Facilty extends Model
         return $this->hasMany(FacilityBranch::class);
     }
 
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class);
+    }
+
     /**
      * Soft delete model
      */
