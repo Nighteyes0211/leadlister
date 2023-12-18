@@ -28,6 +28,8 @@ Route::prefix('dashboard/o/')
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+        Route::post('import-data', [DashboardController::class, 'importData'])->name('import.data');
+
         # Role
         Route::prefix('role')
             ->name('role.')

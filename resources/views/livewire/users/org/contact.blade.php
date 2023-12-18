@@ -11,7 +11,13 @@
             <x-bootstrap.form.input name="house_number" label="House number" />
             <x-bootstrap.form.input name="zip_code" label="Zip code" />
             <x-bootstrap.form.input name="location" label="Location" />
-            <x-bootstrap.form.input name="position" label="Position" />
+
+            <x-bootstrap.form.select name="position" label="Position">
+                @foreach ($positions as $singlePosition)
+                    <option value="{{ $singlePosition->id }}">{{ $singlePosition->name }}</option>
+                @endforeach
+            </x-bootstrap.form.select>
+
             <x-bootstrap.form.select name="status" label="Status" >
                 <option value="{{ \App\Enum\Contact\StatusEnum::PENDING->value }}">{{ \App\Enum\Contact\StatusEnum::PENDING->value }}</option>
                 <option value="{{ \App\Enum\Contact\StatusEnum::COMPLETED->value }}">{{ \App\Enum\Contact\StatusEnum::COMPLETED->value }}</option>

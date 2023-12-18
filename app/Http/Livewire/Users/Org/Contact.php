@@ -6,6 +6,7 @@ use App\Enum\Contact\StatusEnum;
 use App\Enum\PageModeEnum;
 use App\Mail\User\NewAppointment;
 use App\Models\Contact as ModelsContact;
+use App\Models\Position;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -20,7 +21,7 @@ class Contact extends Component
     /**
      * Collection
      */
-    public $users;
+    public $users, $positions;
 
     /**
      * Form
@@ -30,10 +31,12 @@ class Contact extends Component
     public function mount()
     {
         $this->users = User::active()->available()->get();
+        $this->positions = Position::active()->available()->get();
         if ($this->mode == PageModeEnum::CREATE)
         {
             $this->status = StatusEnum::PENDING->value;
             $this->assign_to = auth()->user()->id;
+            $this->position = $this->positions->first()?->id;
         } else {
             $this->first_name = $this->contact->first_name;
             $this->last_name = $this->contact->last_name;
@@ -44,7 +47,7 @@ class Contact extends Component
             $this->house_number = $this->contact->house_number;
             $this->zip_code = $this->contact->zip_code;
             $this->location = $this->contact->location;
-            $this->position = $this->contact->position;
+            $this->position = $this->contact->position_id;
             $this->status = $this->contact->status;
             $this->notes = $this->contact->notes;
             $this->assign_to = $this->contact->user_id;
@@ -84,7 +87,7 @@ class Contact extends Component
             'house_number' => $this->house_number,
             'zip_code' => $this->zip_code,
             'location' => $this->location,
-            'position' => $this->position,
+            'position_id' => $this->position,
             'status' => $this->status,
             'notes' => $this->notes,
             'user_id' => $this->assign_to,
@@ -133,7 +136,7 @@ class Contact extends Component
             'house_number' => $this->house_number,
             'zip_code' => $this->zip_code,
             'location' => $this->location,
-            'position' => $this->position,
+            'position_id' => $this->position,
             'status' => $this->status,
             'notes' => $this->notes,
             'user_id' => $this->assign_to,

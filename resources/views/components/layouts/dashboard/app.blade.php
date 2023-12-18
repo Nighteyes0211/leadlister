@@ -72,6 +72,12 @@
                                     class="create-reservation-btn d-none px-4">Reserve</x-bootstrap.button>
 
                         <div class="d-flex order-lg-2 my-auto">
+                            @role(RoleEnum::SUPERADMINISTRATOR->value)
+                                <form id="import-data-form" action="{{ route('organization.import.data') }}" method="POST">
+                                    @csrf
+                                    <button type="submit"  id="import-data" class="btn btn-primary mb-0">Import data</button>
+                                </form>
+                            @endrole
                             <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto"
                                 type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
                                 aria-controls="navbarSupportedContent-4" aria-expanded="false"
@@ -317,6 +323,11 @@
             <div class="app-content main-content">
                 <div class="side-app  main-container">
 
+                    @if (session()->has('success'))
+                        <div class="mt-4">
+                            <x-bootstrap.alert.default message="{{ session()->get('success') }}"></x-bootstrap.alert.default>
+                        </div>
+                    @endif
                     {{ $slot }}
 
                 </div>
@@ -327,7 +338,7 @@
                 <div class="row align-items-center flex-row-reverse">
                     <div class="col-md-12 col-sm-12 mt-3 mt-lg-0 text-center">
                         Copyright © 2023 <a href="#">{{ $website_name }}</a>. Developed by <a
-                            href="https://livebits.pk" target="_blank">LiveBits</a>
+                            href="https://devop360.com/" target="_blank">devop360</a>
                     </div>
                 </div>
             </div>
@@ -385,7 +396,15 @@
             }
         })
 
+        $('#import-data-form').submit(function () {
+            $('#import-data').attr('disabled', true);
+            $('#import-data').html(
+                `<span class="spinner-border" role="status"> <span
+                    class="sr-only">Loading...</span>
+                </span>`
 
+            )
+        })
 
         $('.sumoselect').SumoSelect({
                 csvDispCount: 3,
