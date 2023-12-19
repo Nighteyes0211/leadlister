@@ -13,4 +13,9 @@ class FacilityBranch extends Model
 
     protected $guarded = [];
 
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class);
+    }
+
 }

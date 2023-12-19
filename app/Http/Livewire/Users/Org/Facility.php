@@ -12,6 +12,7 @@ use App\Models\Facilty;
 use App\Models\Noteable;
 use App\Models\User;
 use App\Traits\HasDynamicInput;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -46,7 +47,7 @@ class Facility extends Component
     public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $appointment_user;
 
     // Branch
-    public $branch_name, $branch_street, $branch_housing_number, $branch_zip, $branch_location, $branch_contact;
+    public $branch_name, $branch_street, $branch_housing_number, $branch_zip, $branch_location, $branch_contact = [];
     public $facility_branches = [];
 
     public function mount()
@@ -181,14 +182,18 @@ class Facility extends Component
         $facility->contacts()->attach($this->contact);
 
         foreach ($this->facility_branches as $branch) {
-            $facility->branches()->create([
+            $createdBranch = $facility->branches()->create([
                 'name' => $branch['name'],
                 'street' => $branch['street'],
                 'housing_number' => $branch['housing_number'],
                 'zip' => $branch['zip'],
                 'location' => $branch['location'],
-                'contact' => $branch['contact'],
             ]);
+
+            if ($branch['contact'])
+            {
+                $createdBranch->contacts()->attach($branch['contact']);
+            }
         }
         foreach ($this->inputs['notes'] as $note) {
             if ($note['note'])
@@ -239,7 +244,7 @@ class Facility extends Component
         $this->facility->contacts()->sync($this->contact);
         foreach ($this->facility_branches as $branch) {
 
-            $this->facility->branches()->updateOrCreate(
+            $selectedBranch = $this->facility->branches()->updateOrCreate(
                 [
                     'id' => $branch['id']
                 ],
@@ -249,8 +254,12 @@ class Facility extends Component
                 'housing_number' => $branch['housing_number'],
                 'zip' => $branch['zip'],
                 'location' => $branch['location'],
-                'contact' => $branch['contact'],
             ]);
+            if ($branch['contact'])
+            {
+                $selectedBranch->contacts()->sync($branch['contact']);
+            }
+
         }
         foreach ($this->inputs['notes'] as $note) {
             if ($note['note'])
@@ -272,7 +281,7 @@ class Facility extends Component
     {
 
         $this->validate([
-            'branch_name' => 'required|string|max:255',
+            'branch_name' => ['required', 'string', 'max:255', Rule::notIn(Arr::pluck($this->facility_branches, 'name'))],
             'branch_street' => 'required|string|max:255',
             'branch_housing_number' => 'required|string|max:20',
             'branch_zip' => 'required|string|max:20',

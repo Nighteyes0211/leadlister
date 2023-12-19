@@ -68,8 +68,19 @@
                         <x-bootstrap.form.input name="branch_housing_number" label="Housing number" />
                         <x-bootstrap.form.input name="branch_zip" label="ZIP" />
                         <x-bootstrap.form.input name="branch_location" label="Location" />
-                        <x-bootstrap.form.input name="branch_contact" label="Contact" />
+                        <div>
+                            <div wire:ignore>
+                                <x-bootstrap.form.select name="branch_contact" class="sumoselect" label="Contact" multiple>
+                                    @foreach ($contacts as $singleContact)
+                                        <option value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
+                                    @endforeach
+                                </x-bootstrap.form.select>
+                            </div>
 
+                            @error('contact')
+                                <p class="text-danger small">{{ $message }}</p>
+                            @enderror
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -182,6 +193,10 @@
 
             $('#contact').change(() => {
                 @this.set('contact', $('#contact').val(), true)
+            })
+
+            $('#branch_contact').change(() => {
+                @this.set('branch_contact', $('#branch_contact').val(), true)
             })
 
             $('#appointment_user').change(() => {
