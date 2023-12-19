@@ -10,6 +10,7 @@ use App\Models\FacilityType;
 use App\Models\Facilty;
 use App\Models\Noteable;
 use App\Traits\HasDynamicInput;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Facility extends Component
@@ -138,7 +139,7 @@ class Facility extends Component
     public function store()
     {
         $rules = [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', Rule::unique('facilties')->where('is_deleted', 0)],
             'telephone' => 'nullable|string|max:20',
             'street' => 'nullable|string|max:255',
             'house_number' => 'nullable|string|max:20',
@@ -199,7 +200,7 @@ class Facility extends Component
     public function edit()
     {
         $rules = [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', Rule::unique('facilties')->ignore($this->facility->id)->where('is_deleted', 0)],
             'telephone' => 'nullable|string|max:20',
             'street' => 'nullable|string|max:255',
             'house_number' => 'nullable|string|max:20',
