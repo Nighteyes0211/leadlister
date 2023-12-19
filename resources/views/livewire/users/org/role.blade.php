@@ -4,7 +4,7 @@
         <x-bootstrap.card>
 
             <x-slot name="header">
-                <h4 class="card-title">Roles</h4>
+                <h4 class="card-title">Rollen</h4>
             </x-slot>
 
             <x-bootstrap.table :datatable="true">
@@ -12,7 +12,7 @@
                 <x-slot name="head">
                     <th>#</th>
                     <th>Name</th>
-                    <th>Actions</th>
+                    <th>Aktion</th>
                 </x-slot>
 
                 <x-slot name="body">
@@ -39,7 +39,7 @@
         <x-bootstrap.card>
 
             <x-slot name="header">
-                <h4 class="card-title">Role</h4>
+                <h4 class="card-title">Rolle</h4>
             </x-slot>
 
             <x-bootstrap.form method="{{ $mode == PageModeEnum::EDIT ? 'edit' : 'store' }}">
@@ -50,13 +50,13 @@
                         <input type="checkbox" wire:model.defer="all" id="all"
                             class="custom-switch-input">
                         <span class="custom-switch-indicator"></span>
-                        <span class="custom-switch-description">All permissions</span>
+                        <span class="custom-switch-description">Alle Berechtigungen</span>
                     </label>
                 </div>
                 <x-bootstrap.table>
                     <x-slot name="head">
                         <th>Module</th>
-                        <th>Permissions</th>
+                        <th>Berechtigungen</th>
                     </x-slot>
 
                     <x-slot name="body">
@@ -122,7 +122,7 @@
 
                 <div class="mt-4 d-flex justify-content-end gap-2 align-items-center" >
                     <x-bootstrap.button size="md" class="mb-4" color="secondary" href="{{ route('organization.role.index') }}">Back</x-bootstrap.button>
-                    <x-bootstrap.form.button :col="false">Submit</x-bootstrap.form.button>
+                    <x-bootstrap.form.button :col="false">Speichern</x-bootstrap.form.button>
                 </div>
 
             </x-bootstrap.form>

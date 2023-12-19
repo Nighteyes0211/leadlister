@@ -2,7 +2,7 @@
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Calendar</x-dayone.page.title>
+            <x-dayone.page.title>Kalender</x-dayone.page.title>
         </x-slot>
     </x-dayone.page.header>
 
@@ -33,7 +33,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="appointmentTitle">
-                        Appointment Details
+                        Telefontermin Details
                     </h5>
                     <button
                         type="button"
@@ -47,11 +47,11 @@
                     {{-- $table->string('name');
             $table->string('contact'); --}}
 
-                    <p>User: <span id="user"></span></p>
+                    <p>Benutzer: <span id="user"></span></p>
                     <p>Name: <span id="name"></span></p>
-                    <p>Contact: <span id="contact"></span></p>
+                    <p>Kontakt: <span id="contact"></span></p>
                     <p>Start: <span id="start"></span></p>
-                    <p>End: <span id="end"></span></p>
+                    <p>Ende: <span id="end"></span></p>
 
                 </div>
                 <div class="modal-footer">
@@ -60,7 +60,7 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
-                        Close
+                        Schließen
                     </button>
                 </div>
             </div>

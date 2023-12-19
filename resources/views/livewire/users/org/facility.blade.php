@@ -13,7 +13,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="appointment_modalTitleId">
-                        Create Appointment
+                        Telefontermin erstellen
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -22,18 +22,18 @@
 
 
                         <x-bootstrap.form.input name="appointment_name" label="Name"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input name="appointment_contact" label="Contact"></x-bootstrap.form.input>
+                        <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_start_date"
-                            label="Start Date"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input type="datetime-local" name="appointment_end_date" label="End Date"></x-bootstrap.form.input>
+                            label="Startzeit"></x-bootstrap.form.input>
+                        <x-bootstrap.form.input type="datetime-local" name="appointment_end_date" label="Endzeit"></x-bootstrap.form.input>
 
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
+                            Schließen
                         </button>
-                        <button type="submit" class="btn btn-primary">Create Appointment</button>
+                        <button type="submit" class="btn btn-primary">Erstelle Telefontermin</button>
                     </div>
                 </x-bootstrap.form>
             </div>
