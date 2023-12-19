@@ -1,7 +1,7 @@
 <div>
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>User</x-dayone.page.title>
+            <x-dayone.page.title>Benutzer</x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 
@@ -20,7 +20,7 @@
             <x-bootstrap.card>
 
                 <x-slot name="header">
-                    <h4 class="card-title">Users</h4>
+                    <h4 class="card-title">Benutzer</h4>
                 </x-slot>
 
                 <x-bootstrap.table :datatable="true">
@@ -28,8 +28,8 @@
                     <x-slot name="head">
                         <th>#</th>
                         <th>Name</th>
-                        <th>Role(s)</th>
-                        <th>Actions</th>
+                        <th>Rolle(n)</th>
+                        <th>Aktion</th>
                     </x-slot>
 
                     <x-slot name="body">
@@ -78,11 +78,11 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <x-bootstrap.form.input :col="false" name="first_name"
-                                label="First name"></x-bootstrap.form.input>
+                                label="Vorname"></x-bootstrap.form.input>
                         </div>
                         <div class="col-lg-6">
                             <x-bootstrap.form.input :col="false" name="last_name"
-                                label="Last name"></x-bootstrap.form.input>
+                                label="Nachname"></x-bootstrap.form.input>
                         </div>
                     </div>
 
@@ -90,15 +90,15 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <x-bootstrap.form.input type="email" :col="false" name="email"
-                                label="Email"></x-bootstrap.form.input>
+                                label="E-Mail Adresse"></x-bootstrap.form.input>
                         </div>
                         <div class="col-lg-4">
                             <x-bootstrap.form.input type="password" :col="false" name="password"
-                                label="Password"></x-bootstrap.form.input>
+                                label="Passwort"></x-bootstrap.form.input>
                         </div>
 
                         <div class="col-lg-4">
-                            <x-bootstrap.form.select :col="false" name="role" label="Role">
+                            <x-bootstrap.form.select :col="false" name="role" label="Rolle">
                                 @foreach ($roles as $singleRole)
                                     <option value="{{ $singleRole->name }}">{{ $singleRole->name }}</option>
                                 @endforeach
@@ -108,8 +108,8 @@
                     </div>
 
                     <div class="mt-4 d-flex justify-content-end gap-2 align-items-center" >
-                        <x-bootstrap.button size="md" class="mb-4" color="secondary" href="{{ route('organization.dashboard') }}">Back</x-bootstrap.button>
-                        <x-bootstrap.form.button action="" :col="false">Submit</x-bootstrap.form.button>
+                        <x-bootstrap.button size="md" class="mb-4" color="secondary" href="{{ route('organization.dashboard') }}">Zurück</x-bootstrap.button>
+                        <x-bootstrap.form.button action="" :col="false">Speichern</x-bootstrap.form.button>
                     </div>
                 </x-bootstrap.form>
 

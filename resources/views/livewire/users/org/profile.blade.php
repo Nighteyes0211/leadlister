@@ -6,10 +6,10 @@
             <div class="row">
                 <div class="col-lg-6">
                     <x-bootstrap.form.input :col="false" name="first_name"
-                        label="First name"></x-bootstrap.form.input>
+                        label="Vorname"></x-bootstrap.form.input>
                 </div>
                 <div class="col-lg-6">
-                    <x-bootstrap.form.input :col="false" name="last_name" label="Last name"></x-bootstrap.form.input>
+                    <x-bootstrap.form.input :col="false" name="last_name" label="Nachname"></x-bootstrap.form.input>
                 </div>
             </div>
 
@@ -17,31 +17,31 @@
             <div class="row">
                 <div class="col-lg-6">
                     <x-bootstrap.form.input type="email" :col="false" name="email"
-                        label="Email"></x-bootstrap.form.input>
+                        label="E-Mail Adresse"></x-bootstrap.form.input>
                 </div>
                 <div class="col-lg-6">
                     <x-bootstrap.form.input type="password" :col="false" name="password"
-                        label="Password"></x-bootstrap.form.input>
+                        label="Passwort"></x-bootstrap.form.input>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-3 d-flex align-items-center">
                     <x-bootstrap.form.checkbox :col="false" name="is_absent"
-                        label="Is absent?"></x-bootstrap.form.checkbox>
+                        label="Abwesend?"></x-bootstrap.form.checkbox>
                 </div>
                 <div class="col-lg-3">
                     <x-bootstrap.form.input type="datetime-local" :col="false" name="absent_from"
-                        label="Absent from"></x-bootstrap.form.input>
+                        label="Abwesend von"></x-bootstrap.form.input>
                 </div>
                 <div class="col-lg-3">
                     <x-bootstrap.form.input type="datetime-local" :col="false" name="absent_to"
-                        label="Absent to"></x-bootstrap.form.input>
+                        label="bis"></x-bootstrap.form.input>
                 </div>
                 <div class="col-lg-3">
                     <div>
                         <div wire:ignore>
-                            <x-bootstrap.form.select :col="false" name="substitution_user" class="sumoselect" label="Substitution">
+                            <x-bootstrap.form.select :col="false" name="substitution_user" class="sumoselect" label="Vertretung">
                                 @foreach ($users as $singleUser)
                                     <option {{ $singleUser->id == auth()->user()->substitution_handler ? 'selected' : '' }} value="{{ $singleUser->id }}">{{ $singleUser->fullName() }}</option>
                                 @endforeach
@@ -58,7 +58,7 @@
 
             <div class="mt-4 d-flex justify-content-end gap-2 align-items-center" >
                 <x-bootstrap.button size="md" class="mb-4" color="secondary" href="{{ route('organization.dashboard') }}">Back</x-bootstrap.button>
-                <x-bootstrap.form.button action="" :col="false">Submit</x-bootstrap.form.button>
+                <x-bootstrap.form.button action="" :col="false">Speichern</x-bootstrap.form.button>
             </div>
         </x-bootstrap.form>
 

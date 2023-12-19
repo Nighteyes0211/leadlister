@@ -10,10 +10,10 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <x-dayone.stats.stats1 label="Todays appointment" value="{{ $currentAppointment }}" iconBg="primary" icon="fa fa-calendar"></x-dayone.stats.stats1>
+            <x-dayone.stats.stats1 label="Telefontermine heute" value="{{ $currentAppointment }}" iconBg="primary" icon="fa fa-calendar"></x-dayone.stats.stats1>
         </div>
         <div class="col-lg-3">
-            <x-dayone.stats.stats1 label="Tomorrows appointment" value="{{ $tomorrowAppointment }}" iconBg="secondary" icon="fa fa-calendar"></x-dayone.stats.stats1>
+            <x-dayone.stats.stats1 label="Telefontermine morgen" value="{{ $tomorrowAppointment }}" iconBg="secondary" icon="fa fa-calendar"></x-dayone.stats.stats1>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="User">
+<x-layouts.dashboard.app title="Benutzer">
 
     @if ($mode != PageModeEnum::EDIT)
         @livewire('users.org.user', compact('mode'))

@@ -2,7 +2,7 @@
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Branch</x-dayone.page.title>
+            <x-dayone.page.title>Niederlassung</x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 

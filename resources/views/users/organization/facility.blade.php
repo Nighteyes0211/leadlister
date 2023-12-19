@@ -2,7 +2,7 @@
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Facility</x-dayone.page.title>
+            <x-dayone.page.title>Einrichtungen</x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 
