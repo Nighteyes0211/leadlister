@@ -3,13 +3,16 @@
 namespace App\Http\Livewire\Users\Org;
 
 use App\Enum\PageModeEnum;
+use App\Mail\User\NewAppointment;
 use App\Models\Appointment;
 use App\Models\Branch;
 use App\Models\Contact;
 use App\Models\FacilityType;
 use App\Models\Facilty;
 use App\Models\Noteable;
+use App\Models\User;
 use App\Traits\HasDynamicInput;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -26,7 +29,7 @@ class Facility extends Component
     /**
      * Collection
      */
-    public $facility_types, $contacts;
+    public $facility_types, $contacts, $users;
 
     public $name;
     public $telephone;
@@ -40,7 +43,7 @@ class Facility extends Component
     public $info_material = false;
 
     // Appointment
-    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date;
+    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $appointment_user;
 
     // Branch
     public $branch_name, $branch_street, $branch_housing_number, $branch_zip, $branch_location, $branch_contact;
@@ -51,6 +54,8 @@ class Facility extends Component
 
         $this->facility_types = FacilityType::active()->available()->get();
         $this->contacts = Contact::available()->get();
+        $this->users = User::active()->available()->get();
+        $this->appointment_user = auth()->user()->id;
 
         // $this->name = $this->branch->name;
         // $this->street = $this->branch->street;
@@ -298,13 +303,20 @@ class Facility extends Component
             'appointment_end_date' => 'required|date',
         ]);
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'name' => $this->appointment_name,
             'contact' => $this->appointment_contact,
             'start_date' => $this->appointment_start_date,
             'end_date' => $this->appointment_end_date,
-            'user_id' => auth()->id(),
+            'user_id' => $this->appointment_user,
         ]);
+
+
+        if ($this->appointment_user != auth()->user()->id)
+        {
+            Mail::to(User::find($this->appointment_user))->send(new NewAppointment($appointment));
+        }
+
 
         $this->emit('closeModal', 'appointment_modal');
     }

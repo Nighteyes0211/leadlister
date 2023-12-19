@@ -93,12 +93,6 @@ class Contact extends Component
             'user_id' => $this->assign_to,
         ]);
 
-
-        if ($this->assign_to != auth()->user()->id)
-        {
-            Mail::to(User::find($this->assign_to))->send(new NewAppointment());
-        }
-
         return redirect()->route('organization.contact.index');
     }
 

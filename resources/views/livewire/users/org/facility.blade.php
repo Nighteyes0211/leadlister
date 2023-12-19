@@ -27,6 +27,11 @@
                             label="Startzeit"></x-bootstrap.form.input>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_end_date" label="Endzeit"></x-bootstrap.form.input>
 
+                        <x-bootstrap.form.select name="appointment_user" class="sumoselect" label="Assign To">
+                            @foreach ($users as $singleUser)
+                                <option  value="{{ $singleUser->id }}">{{ $singleUser->id == auth()->id() ? 'Me' :  $singleUser->fullName() }}</option>
+                            @endforeach
+                        </x-bootstrap.form.select>
 
                     </div>
                     <div class="modal-footer">
@@ -177,6 +182,10 @@
 
             $('#contact').change(() => {
                 @this.set('contact', $('#contact').val(), true)
+            })
+
+            $('#appointment_user').change(() => {
+                @this.set('appointment_user', $('#appointment_user option:selected').val(), true)
             })
 
         })
