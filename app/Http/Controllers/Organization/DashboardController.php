@@ -103,14 +103,16 @@ class DashboardController extends Controller
                 }
 
 
-                if ($row[20])
+                if (Contact::where('email', $row[14])->exists())
                 {
+                    $contact = Contact::where('email', $row[14])->first();
+                } else {
                     $contact = Contact::firstOrCreate(
                         [
-                            'email' => $row[14] ?: null
+                            'email' => $row[14] ?: null,
+                            'first_name' => $row[20],
                         ],
                         [
-                            'first_name' => $row[20],
                             'last_name' => $row[21],
                             'user_id' => $creator->id
                         ]
@@ -130,7 +132,7 @@ class DashboardController extends Controller
                     ]
                 );
 
-                if (isset($contact) && $facility->contacts()->whereNot('contacts.id', $contact->id)->exists()) {
+                if (!($facility->contacts()->where('contacts.id', $contact->id)->exists())) {
                     $facility->contacts()->attach($contact->id);
                 }
 
