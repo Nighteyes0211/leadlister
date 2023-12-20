@@ -75,7 +75,8 @@
                             @role(RoleEnum::SUPERADMINISTRATOR->value)
                                 <form id="import-data-form" action="{{ route('organization.import.data') }}" method="POST">
                                     @csrf
-                                    <button type="submit"  id="import-data" class="btn btn-primary mb-0">Import data</button>
+                                    <input type="file" hidden name="file" id="file" accept=".csv">
+                                    <label for="file" id="import-data" class="btn btn-primary mb-0">Import data</label>
                                 </form>
                             @endrole
                             <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto"
@@ -394,6 +395,10 @@
             if (document.getElementById("myAudio").paused) {
                 document.getElementById("myAudio").play()
             }
+        })
+
+        $("#file").change(function () {
+            $('#import-data-form').submit();
         })
 
         $('#import-data-form').submit(function () {
