@@ -58,17 +58,25 @@ class ImportCsv implements ShouldQueue
                 $creator->assignRole(RoleEnum::USER->value);
             }
 
+            if ($row[20])
+            {
+                if (Contact::where('email', $row[14])->exists())
+                {
+                    $contact = Contact::where('email', $row[14])->first();
+                } else {
+                    $contact = Contact::firstOrCreate(
+                        [
+                            'email' => $row[14] ?: null,
+                            'first_name' => $row[20],
+                        ],
+                        [
+                            'last_name' => $row[21],
+                            'user_id' => $creator->id
+                        ]
+                    );
+                }
+            }
 
-            $contact = Contact::firstOrCreate(
-                [
-                    'email' => $row[14] ?: null
-                ],
-                [
-                    'first_name' => $row[20],
-                    'last_name' => $row[21],
-                    'user_id' => $creator->id
-                ]
-            );
 
             $facility = Facilty::firstOrCreate(
                 [
@@ -83,7 +91,8 @@ class ImportCsv implements ShouldQueue
                 ]
             );
 
-            if (isset($contact) && $facility->contacts()->whereNot('contacts.id', $contact->id)->exists()) {
+
+            if (isset($contact) && !($facility->contacts()->where('contacts.id', $contact->id)->exists())) {
                 $facility->contacts()->attach($contact->id);
             }
 
