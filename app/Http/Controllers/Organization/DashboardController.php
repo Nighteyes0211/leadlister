@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Organization;
 
 use App\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
+use App\Jobs\ImportCsv;
 use App\Models\Appointment;
 use App\Models\Contact;
 use App\Models\FacilityType;
@@ -13,6 +14,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -64,8 +66,10 @@ class DashboardController extends Controller
 
     public function importData()
     {
-         // Check if the file exists
-         if (file_exists(storage_path('app/data.csv'))) {
+
+        $data = [];
+        // Check if the file exists
+        if (file_exists(storage_path('app/data.csv'))) {
             // Open the CSV file for reading
             $file = fopen(storage_path('app/data.csv'), 'r');
 
@@ -74,75 +78,86 @@ class DashboardController extends Controller
             $row_index = -1;
 
             // Read and parse each row
-            while (($row = fgetcsv($file)) !== false && $row_index < 50) {
+            while (($row = fgetcsv($file)) !== false) {
 
-                $creator = User::first();
 
                 $row_index += 1;
                 if ($row_index == 0 && true) {
                     continue;
                 }
 
-                $facility_type = FacilityType::firstOrCreate(
-                    ['name' => $row[6]]
-                );
 
-                if ($row[16])
-                {
-                    $creator = User::firstOrCreate(
-                        [
-                            'email' => $row[16] . '@gmail.com',
-                        ],
-                        [
-                            'first_name' => $row[16],
-                            'last_name' => '.',
-                            'password' => Hash::make('password'),
-                        ]
-                    );
-                    $creator->assignRole(RoleEnum::USER->value);
-                }
-
-
-                if (Contact::where('email', $row[14])->exists())
-                {
-                    $contact = Contact::where('email', $row[14])->first();
-                } else {
-                    $contact = Contact::firstOrCreate(
-                        [
-                            'email' => $row[14] ?: null,
-                            'first_name' => $row[20],
-                        ],
-                        [
-                            'last_name' => $row[21],
-                            'user_id' => $creator->id
-                        ]
-                    );
-                }
-
-                $facility = Facilty::firstOrCreate(
-                    [
-                        'name' => $row[8],
-                    ],
-                    [
-                        'facility_type_id' => $facility_type->id,
-                        'zip_code' => $row[9] ? explode(' ', $row[9])[0] : '',
-                        'location' => $row[9] ? (array_key_exists(1, explode(' ', $row[9])) ? explode(' ', $row[9])[1] : '') : '',
-                        'telephone' => $row[13],
-                        'street' => $row[12],
-                    ]
-                );
-
-                if (!($facility->contacts()->where('contacts.id', $contact->id)->exists())) {
-                    $facility->contacts()->attach($contact->id);
-                }
-
+                $data[] = $row;
             }
 
             // Close the file
             fclose($file);
         }
 
-        return redirect()->back()->with('success', 'Data imported successfully');
+        $data = array_chunk($data, 50);
+        $readyData = [];
+        $batches = Bus::batch([])->dispatch();
+        foreach ($data as $chunk)
+        {
+            // $readyData[] = new ImportCsv($chunk);
+            $batches->add(new ImportCsv($chunk));
+        }
+
+
+
+        // $creator = User::first();
+        // $facility_type = FacilityType::firstOrCreate(
+        //     ['name' => $row[6]]
+        // );
+
+        // if ($row[16])
+        // {
+        //     $creator = User::firstOrCreate(
+        //         [
+        //             'email' => $row[16] . '@gmail.com',
+        //         ],
+        //         [
+        //             'first_name' => $row[16],
+        //             'last_name' => '.',
+        //             'password' => Hash::make('password'),
+        //         ]
+        //     );
+        //     $creator->assignRole(RoleEnum::USER->value);
+        // }
+
+
+        // if ($row[20])
+        // {
+        //     $contact = Contact::firstOrCreate(
+        //         [
+        //             'email' => $row[14] ?: null
+        //         ],
+        //         [
+        //             'first_name' => $row[20],
+        //             'last_name' => $row[21],
+        //             'user_id' => $creator->id
+        //         ]
+        //     );
+        // }
+
+        // $facility = Facilty::firstOrCreate(
+        //     [
+        //         'name' => $row[8],
+        //     ],
+        //     [
+        //         'facility_type_id' => $facility_type->id,
+        //         'zip_code' => $row[9] ? explode(' ', $row[9])[0] : '',
+        //         'location' => $row[9] ? (array_key_exists(1, explode(' ', $row[9])) ? explode(' ', $row[9])[1] : '') : '',
+        //         'telephone' => $row[13],
+        //         'street' => $row[12],
+        //     ]
+        // );
+
+        // if (isset($contact) && $facility->contacts()->whereNot('contacts.id', $contact->id)->exists()) {
+        //     $facility->contacts()->attach($contact->id);
+        // }
+
+        return redirect()->back()->with('success', 'Data is being imported.');
 
     }
 }
