@@ -4,6 +4,10 @@
         <x-slot name="left">
             <x-dayone.page.title>Kalender</x-dayone.page.title>
         </x-slot>
+
+        <x-slot name="right">
+            @livewire('users.org.modal.create.appointment')
+        </x-slot>
     </x-dayone.page.header>
 
     <!-- Button trigger modal -->

@@ -1,0 +1,49 @@
+<div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-secondary btn-lg" data-bs-toggle="modal"
+        data-bs-target="#appointment_modal">
+        Create Appointment
+    </button>
+
+    <!-- Modal -->
+    <div wire:ignore.self class="modal fade" id="appointment_modal" tabindex="-1" role="dialog"
+        aria-labelledby="appointment_modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointment_modalTitleId">
+                        Telefontermin erstellen
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <x-bootstrap.form method="store">
+                    <div class="modal-body">
+
+
+                        <x-bootstrap.form.input name="appointment_name" label="Name"></x-bootstrap.form.input>
+                        <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input>
+                        <x-bootstrap.form.input type="datetime-local" name="appointment_start_date"
+                            label="Startzeit"></x-bootstrap.form.input>
+                        <x-bootstrap.form.input type="datetime-local" name="appointment_end_date"
+                            label="Endzeit"></x-bootstrap.form.input>
+
+                        <x-bootstrap.form.select name="appointment_user" class="sumoselect" label="Assign To">
+                            @foreach ($users as $singleUser)
+                                <option value="{{ $singleUser->id }}">
+                                    {{ $singleUser->id == auth()->id() ? 'Me' : $singleUser->fullName() }}</option>
+                            @endforeach
+                        </x-bootstrap.form.select>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Schließen
+                        </button>
+                        <button type="submit" class="btn btn-primary">Erstelle Telefontermin</button>
+                    </div>
+                </x-bootstrap.form>
+            </div>
+        </div>
+    </div>
+
+</div>

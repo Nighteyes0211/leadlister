@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users\Org;
 
+use App\Enum\Facility\StatusEnum;
 use App\Enum\PageModeEnum;
 use App\Mail\User\NewAppointment;
 use App\Models\Appointment;
@@ -42,9 +43,9 @@ class Facility extends Component
     public $facility_type;
     public $tele_appointment = false;
     public $info_material = false;
+    public $status;
 
-    // Appointment
-    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $appointment_user;
+
 
     // Branch
     public $branch_name, $branch_street, $branch_housing_number, $branch_zip, $branch_location, $branch_contact = [];
@@ -56,7 +57,6 @@ class Facility extends Component
         $this->facility_types = FacilityType::active()->available()->get();
         $this->contacts = Contact::available()->get();
         $this->users = User::active()->available()->get();
-        $this->appointment_user = auth()->user()->id;
 
         // $this->name = $this->branch->name;
         // $this->street = $this->branch->street;
@@ -84,6 +84,7 @@ class Facility extends Component
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
+            $this->status = $this->facility->status;
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
                 'note' => $note->text
@@ -105,18 +106,12 @@ class Facility extends Component
 
         } else {
             $this->facility_type = $this->facility_types->first()?->id;
+            $this->status = StatusEnum::ACTIVE->value;
             $this->fillInputs();
         }
 
         // dd($this->inputs['notes']);
 
-    }
-
-    public function updatedTeleAppointment()
-    {
-        if ($this->tele_appointment && $this->mode == PageModeEnum::CREATE) {
-            $this->emit('openModal', 'appointment_modal');
-        }
     }
 
     public function render()
@@ -175,6 +170,7 @@ class Facility extends Component
             'facility_type_id' => $this->facility_type,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
+            'status' => $this->status,
         ];
 
 
@@ -237,6 +233,7 @@ class Facility extends Component
             'facility_type_id' => $this->facility_type,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
+            'status' => $this->status,
         ];
 
 
@@ -303,30 +300,4 @@ class Facility extends Component
         $this->emit('closeModal', 'branch_modal');
     }
 
-    public function createAppointment()
-    {
-        $this->validate([
-            'appointment_name' => 'required|string|max:255',
-            'appointment_contact' => 'required',
-            'appointment_start_date' => 'required|date',
-            'appointment_end_date' => 'required|date',
-        ]);
-
-        $appointment = Appointment::create([
-            'name' => $this->appointment_name,
-            'contact' => $this->appointment_contact,
-            'start_date' => $this->appointment_start_date,
-            'end_date' => $this->appointment_end_date,
-            'user_id' => $this->appointment_user,
-        ]);
-
-
-        if ($this->appointment_user != auth()->user()->id)
-        {
-            Mail::to(User::find($this->appointment_user))->send(new NewAppointment($appointment));
-        }
-
-
-        $this->emit('closeModal', 'appointment_modal');
-    }
 }

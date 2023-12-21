@@ -1,51 +1,5 @@
 <div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg d-none" id="appointment_modal-opener" data-bs-toggle="modal"
-        data-bs-target="#appointment_modal">
-        Launch
-    </button>
-
-    <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="appointment_modal" tabindex="-1" role="dialog"
-        aria-labelledby="appointment_modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="appointment_modalTitleId">
-                        Telefontermin erstellen
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <x-bootstrap.form method="createAppointment">
-                    <div class="modal-body">
-
-
-                        <x-bootstrap.form.input name="appointment_name" label="Name"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input type="datetime-local" name="appointment_start_date"
-                            label="Startzeit"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input type="datetime-local" name="appointment_end_date" label="Endzeit"></x-bootstrap.form.input>
-
-                        <x-bootstrap.form.select name="appointment_user" class="sumoselect" label="Assign To">
-                            @foreach ($users as $singleUser)
-                                <option  value="{{ $singleUser->id }}">{{ $singleUser->id == auth()->id() ? 'Me' :  $singleUser->fullName() }}</option>
-                            @endforeach
-                        </x-bootstrap.form.select>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Schließen
-                        </button>
-                        <button type="submit" class="btn btn-primary">Erstelle Telefontermin</button>
-                    </div>
-                </x-bootstrap.form>
-            </div>
-        </div>
-    </div>
-
-
 
 
     <!-- Modal -->
@@ -109,7 +63,7 @@
             <div class="form-group mb-0 row justify-content-end">
                 <div class="col-md-9">
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" wire:model="tele_appointment"> <span
+                        <input type="checkbox" class="custom-control-input" wire:model.defer="tele_appointment"> <span
                             class="custom-control-label">Telephone appointment</span>
                     </label>
                 </div>
@@ -128,13 +82,6 @@
                     <option  value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
-
-            {{-- <x-bootstrap.form.select name="branch" label="Branch">
-                @foreach ($branches as $singleBranch)
-                    <option value="{{ $singleBranch->id }}">{{ $singleBranch->name }}</option>
-                @endforeach
-            </x-bootstrap.form.select> --}}
-
 
             <div class="row mb-3">
                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Branches</label>
@@ -181,6 +128,15 @@
                     </x-bootstrap.form.input>
                 </div>
             @endforeach
+
+            <x-bootstrap.form.select name="status" label="Status">
+                <option  value="{{ \App\Enum\Facility\StatusEnum::ACTIVE->value }}">{{ \App\Enum\Facility\StatusEnum::ACTIVE->value }}</option>
+                <option  value="{{ \App\Enum\Facility\StatusEnum::ARRANGE_TELEPHONE_APPOINTMENT->value }}">{{ \App\Enum\Facility\StatusEnum::ARRANGE_TELEPHONE_APPOINTMENT->value }}</option>
+                <option  value="{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value }}">{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value }}</option>
+                <option  value="{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_CARRIED_OUT->value }}">{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_CARRIED_OUT->value }}</option>
+                <option  value="{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_IS_TO_BE_SENT->value }}">{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_IS_TO_BE_SENT->value }}</option>
+                <option  value="{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_HAS_BEEN_SENT->value }}">{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_HAS_BEEN_SENT->value }}</option>
+            </x-bootstrap.form.select>
 
 
             <x-bootstrap.form.button>Submit</x-bootstrap.form.button>
