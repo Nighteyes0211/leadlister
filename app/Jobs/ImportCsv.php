@@ -96,6 +96,7 @@ class ImportCsv implements ShouldQueue
                 $facility->contacts()->attach($contact->id);
             }
 
+            unset($contact);
         }
     }
 }
