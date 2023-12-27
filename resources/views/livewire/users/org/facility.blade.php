@@ -9,7 +9,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="branch_modalTitleId">
-                        Add branch
+                        Add Owner/Parent Company
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -41,7 +41,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-primary">Add branch</button>
+                        <button type="submit" class="btn btn-primary">Add Owner/Parent Company</button>
                     </div>
                 </x-bootstrap.form>
             </div>
@@ -84,7 +84,7 @@
             </x-bootstrap.form.select>
 
             <div class="row mb-3">
-                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Branches</label>
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Owner/Parent Companies</label>
                 <div class="col-sm-12 col-md-7">
                     @foreach ($facility_branches as $singleBranch )
                         <p>{{ $singleBranch['name'] }}</p>
@@ -93,7 +93,7 @@
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary btn-md" id="branch_modal-opener" data-bs-toggle="modal"
                         data-bs-target="#branch_modal">
-                        Add branch
+                        Add Owner/Parent Company
                     </button>
                 </div>
             </div>
@@ -107,10 +107,25 @@
                     </x-bootstrap.form.select>
                 </div>
 
-                @error('contact')
-                    <p class="text-danger small">{{ $message }}</p>
-                @enderror
+                <div class="row">
+                    <div class="col-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-7">
+                        @error('contact')
+                            <p class="text-danger small">{{ $message }}</p>
+                        @enderror
+
+
+                        @if ($facility)
+                            <div class="mt-2">
+                                @foreach ($facility->contacts as $singleContact)
+                                    <p>{!! ($singleContact->first_name ? $singleContact->first_name . ' ' . $singleContact->last_name : $singleContact->email ). ' | ' . ($singleContact->position ?: '<span class="text-muted">No Position</span>') . ' | ' . ($singleContact->telephone ?: '<span class="text-muted">No Telephone</span>') !!}</p>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
+
 
 
             @foreach ($inputs['notes'] as $key => $contact)
