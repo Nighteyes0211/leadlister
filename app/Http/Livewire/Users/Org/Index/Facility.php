@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Users\Org\Index;
 
 use App\Enum\Facility\StatusEnum;
+use App\Enum\RoleEnum;
 use App\Models\FacilityStatus;
 use App\Models\Facilty;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,7 +28,9 @@ class Facility extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Facilty::available();
+        return Facilty::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), function ($query) {
+            $query->whereHas('contacts', fn ($query) => $query->where('contacts.user_id', auth()->id()));
+        });
     }
 
     public function columns() : array
