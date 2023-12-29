@@ -60,7 +60,7 @@
             <x-bootstrap.form.input name="house_number" label="House number" />
             <x-bootstrap.form.input name="zip_code" label="Zip code" />
             <x-bootstrap.form.input name="location" label="Location" />
-            <div class="form-group mb-0 row justify-content-end">
+            {{-- <div class="form-group mb-0 row justify-content-end">
                 <div class="col-md-9">
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" wire:model.defer="tele_appointment"> <span
@@ -75,7 +75,7 @@
                             class="custom-control-label">Information material</span>
                     </label>
                 </div>
-            </div>
+            </div> --}}
 
             <x-bootstrap.form.select name="facility_type" label="Facility Type">
                 @foreach ($facility_types as $singleFacilityType)
@@ -144,14 +144,16 @@
                 </div>
             @endforeach
 
-            <x-bootstrap.form.select name="status" label="Status">
-                <option  value="{{ \App\Enum\Facility\StatusEnum::ACTIVE->value }}">{{ \App\Enum\Facility\StatusEnum::ACTIVE->value }}</option>
-                <option  value="{{ \App\Enum\Facility\StatusEnum::ARRANGE_TELEPHONE_APPOINTMENT->value }}">{{ \App\Enum\Facility\StatusEnum::ARRANGE_TELEPHONE_APPOINTMENT->value }}</option>
-                <option  value="{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value }}">{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value }}</option>
-                <option  value="{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_CARRIED_OUT->value }}">{{ \App\Enum\Facility\StatusEnum::TELEPHONE_APPOINTMENT_CARRIED_OUT->value }}</option>
-                <option  value="{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_IS_TO_BE_SENT->value }}">{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_IS_TO_BE_SENT->value }}</option>
-                <option  value="{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_HAS_BEEN_SENT->value }}">{{ \App\Enum\Facility\StatusEnum::INFORMATION_MATERIAL_HAS_BEEN_SENT->value }}</option>
-            </x-bootstrap.form.select>
+            @foreach ($statuses as $singleStatus)
+                <div wire:key="status-{{ $singleStatus->id }}" class="form-group mb-0 row justify-content-end">
+                    <div class="col-md-9">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" wire:model.defer="status" value="{{ $singleStatus->id }}"> <span
+                                class="custom-control-label">{{ $singleStatus->name }}</span>
+                        </label>
+                    </div>
+                </div>
+            @endforeach
 
 
             <x-bootstrap.form.button>Submit</x-bootstrap.form.button>

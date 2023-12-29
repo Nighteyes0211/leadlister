@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <title>{{ isset($title) ? $title . ' - ' : '' }} {{ $website_name }}</title>
-    <link rel="icon" href="{!! asset('images/logo.png') !!}" type="image/x-icon">
+    <link rel="icon" href="{!! asset('images/logo-ini.png') !!}" type="image/x-icon">
     <link rel="stylesheet" href="{!! asset('backend/plugins/bootstrap/css/bootstrap.css') !!}">
     <link rel="stylesheet" href="{!! asset('backend/css/style.css') !!}">
     <link rel="stylesheet" href="{!! asset('backend/css/plugins.css') !!}">
@@ -89,159 +89,13 @@
                                 class="mb-0 navbar navbar-expand-lg navbar-nav-right responsive-navbar navbar-dark p-0">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                                     <div class="d-flex ms-auto">
-                                        {{--                                    <a class="nav-link  icon p-0 nav-link-lg d-lg-none navsearch"  href="javascript:void(0);" data-bs-toggle="search"> --}}
-                                        {{--                                        <i class="feather feather-search search-icon header-icon"></i> --}}
-                                        {{--                                    </a> --}}
                                         <div class="dropdown  d-flex">
                                             <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                                 <span class="dark-layout"><i class="fe fe-moon"></i></span>
                                                 <span class="light-layout"><i class="fe fe-sun"></i></span>
                                             </a>
                                         </div>
-                                        <!--<div class="dropdown header-flags">
-                                        <a class="nav-link icon" data-bs-toggle="dropdown">
-                                            <img src="../backend/images/flags/flag-png/united-kingdom.png" class="h-24" alt="img">
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow animated">
-                                            <a  href="javascript:void(0);" class="dropdown-item d-flex "> <span class="avatar  me-3 align-self-center bg-transparent"><img src="../backend/images/flags/flag-png/india.png" alt="img" class="h-24"></span>
-                                                <div class="d-flex"> <span class="my-auto">India</span> </div>
-                                            </a>
-                                            <a  href="javascript:void(0);" class="dropdown-item d-flex"> <span class="avatar  me-3 align-self-center bg-transparent"><img src="../backend/images/flags/flag-png/united-kingdom.png" alt="img" class="h-24"></span>
-                                                <div class="d-flex"> <span class="my-auto">UK</span> </div>
-                                            </a>
-                                            <a  href="javascript:void(0);" class="dropdown-item d-flex"> <span class="avatar me-3 align-self-center bg-transparent"><img src="../backend/images/flags/flag-png/italy.png" alt="img" class="h-24"></span>
-                                                <div class="d-flex"> <span class="my-auto">Italy</span> </div>
-                                            </a>
-                                            <a  href="javascript:void(0);" class="dropdown-item d-flex"> <span class="avatar me-3 align-self-center bg-transparent"><img src="../backend/images/flags/flag-png/united-states-of-america.png" class="h-24" alt="img"></span>
-                                                <div class="d-flex"> <span class="my-auto">US</span> </div>
-                                            </a>
-                                            <a  href="javascript:void(0);" class="dropdown-item d-flex"> <span class="avatar  me-3 align-self-center bg-transparent"><img src="../backend/images/flags/flag-png/spain.png" alt="img" class="h-24"></span>
-                                                <div class="d-flex"> <span class="my-auto">Spain</span> </div>
-                                            </a>
-                                        </div>
-                                    </div> -->
-                                        {{-- <div class="dropdown header-fullscreen">
-                                            <a class="nav-link icon full-screen-link">
-                                                <i
-                                                    class="feather feather-maximize fullscreen-button fullscreen header-icons"></i>
-                                                <i
-                                                    class="feather feather-minimize fullscreen-button exit-fullscreen header-icons"></i>
-                                            </a>
-                                        </div> --}}
-                                        {{-- <div class="dropdown header-message">
-                                            <a class="nav-link icon" data-bs-toggle="dropdown">
-                                                <i class="feather feather-mail header-icon"></i>
-                                                <span class="badge badge-success side-badge">5</span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow  animated">
-                                                <div class="header-dropdown-list message-menu" id="message-menu">
-                                                    <a class="dropdown-item border-bottom" href="chat.html">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="">
-                                                                <span
-                                                                    class="avatar avatar-md brround align-self-center cover-image"
-                                                                    data-bs-image-src="../backend/images/users/1.jpg"></span>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="ps-3 text-wrap text-break">
-                                                                    <h6 class="mb-1">Jack Wright</h6>
-                                                                    <p class="fs-13 mb-1">All the best your template
-                                                                        awesome</p>
-                                                                    <div class="small text-muted">
-                                                                        3 hours ago
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="dropdown-item border-bottom" href="chat.html">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="">
-                                                                <span
-                                                                    class="avatar avatar-md brround align-self-center cover-image"
-                                                                    data-bs-image-src="../backend/images/users/2.jpg"></span>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="ps-3 text-wrap text-break">
-                                                                    <h6 class="mb-1">Lisa Rutherford</h6>
-                                                                    <p class="fs-13 mb-1">Hey! there I'm available</p>
-                                                                    <div class="small text-muted">
-                                                                        5 hour ago
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="dropdown-item border-bottom" href="chat.html">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="">
-                                                                <span
-                                                                    class="avatar avatar-md brround align-self-center cover-image"
-                                                                    data-bs-image-src="../backend/images/users/3.jpg"></span>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="ps-3 text-wrap text-break">
-                                                                    <h6 class="mb-1">Blake Walker</h6>
-                                                                    <p class="fs-13 mb-1">Just created a new blog post
-                                                                    </p>
-                                                                    <div class="small text-muted">
-                                                                        45 mintues ago
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="dropdown-item border-bottom" href="chat.html">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="">
-                                                                <span
-                                                                    class="avatar avatar-md brround align-self-center cover-image"
-                                                                    data-bs-image-src="../backend/images/users/4.jpg"></span>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="ps-3 text-wrap text-break">
-                                                                    <h6 class="mb-1">Fiona Morrison</h6>
-                                                                    <p class="fs-13 mb-1">Added new comment on your
-                                                                        photo</p>
-                                                                    <div class="small text-muted">
-                                                                        2 days ago
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="dropdown-item border-bottom" href="chat.html">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="">
-                                                                <span
-                                                                    class="avatar avatar-md brround align-self-center cover-image"
-                                                                    data-bs-image-src="../backend/images/users/6.jpg"></span>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="ps-3 text-wrap text-break">
-                                                                    <h6 class="mb-1">Stewart Bond</h6>
-                                                                    <p class="fs-13 mb-1">Your payment invoice is
-                                                                        generated</p>
-                                                                    <div class="small text-muted">
-                                                                        3 days ago
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class=" text-center p-2">
-                                                    <a href="chat.html" class="">See All Messages</a>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-                                        {{-- <div class="dropdown header-notify">
-                                            <a class="nav-link icon" data-bs-toggle="sidebar-right"
-                                                data-bs-target=".sidebar-right">
-                                                <i class="feather feather-bell header-icon"></i>
-                                                <span class="bg-dot"></span>
-                                            </a>
-                                        </div> --}}
+
                                         <div class="dropdown profile-dropdown">
                                             <a href="#" class="nav-link pe-1 ps-0 leading-none"
                                                 data-bs-toggle="dropdown">
@@ -287,21 +141,13 @@
             <div class="sticky">
                 <!--aside open-->
                 <aside class="app-sidebar">
-                    {{--            <div class="app-sidebar__logo"> --}}
-                    {{--                <a class="header-brand" href="<?php echo url('/'); ?>"> --}}
-                    {{--                    <img src="{!! asset('backend/images/brand/logo.png') !!}" class="header-brand-img desktop-lgo" alt=""> --}}
-                    {{--                    <img src="{!! asset('backend/images/brand/logo-white.png') !!}" class="header-brand-img dark-logo" alt=""> --}}
-                    {{--                    <img src="{!! asset('backend/images/brand/favicon.png') !!}" class="header-brand-img mobile-logo" alt=""> --}}
-                    {{--                    <img src="{!! asset('backend/images/brand/favicon1.png') !!}" class="header-brand-img darkmobile-logo" alt=""> --}}
-                    {{--                </a> --}}
-                    {{--            </div> --}}
                     <div class="app-sidebar3" style="margin-top:0px;">
                         <div class="app-sidebar__user">
                             <div class="dropdown user-pro-body text-center">
                                 <div>
 
                                     <img src="{{ asset('images/logo.png') }}" alt="user-img"
-                                        class="avatar-xxl rounded-circle mb-1" style="object-fit: contain">
+                                        class=" mb-5" style="object-fit: contain">
 
                                 </div>
                                 <div class="user-info">

@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Enum\FacilityType\StatusEnum;
+use App\Enum\Facility\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class FacilityType extends Model
+class FacilityStatus extends Model
 {
     use HasFactory;
 
@@ -43,11 +43,6 @@ class FacilityType extends Model
     /**
      * Scopes
      */
-    public function scopeactive($query)
-    {
-        return $query->where('status', StatusEnum::ACTIVE);
-    }
-
     public function scopeavailable($query)
     {
         return $query->where('is_deleted', false);

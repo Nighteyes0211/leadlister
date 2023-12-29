@@ -114,12 +114,6 @@ class Contact extends Component
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
         ]);
 
-
-        if ($this->contact->user_id != $this->assign_to)
-        {
-            Mail::to(User::find($this->contact->user_id))->send(new NewAppointment());
-        }
-
         $this->contact->update([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,

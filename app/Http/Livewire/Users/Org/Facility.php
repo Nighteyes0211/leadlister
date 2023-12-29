@@ -4,10 +4,12 @@ namespace App\Http\Livewire\Users\Org;
 
 use App\Enum\Facility\StatusEnum;
 use App\Enum\PageModeEnum;
+use App\Enum\RoleEnum;
 use App\Mail\User\NewAppointment;
 use App\Models\Appointment;
 use App\Models\Branch;
 use App\Models\Contact;
+use App\Models\FacilityStatus;
 use App\Models\FacilityType;
 use App\Models\Facilty;
 use App\Models\Noteable;
@@ -31,7 +33,7 @@ class Facility extends Component
     /**
      * Collection
      */
-    public $facility_types, $contacts, $users;
+    public $facility_types, $contacts, $users, $statuses;
 
     public $name;
     public $telephone;
@@ -43,7 +45,7 @@ class Facility extends Component
     public $facility_type;
     public $tele_appointment = false;
     public $info_material = false;
-    public $status;
+    public $status = [];
 
 
 
@@ -55,15 +57,10 @@ class Facility extends Component
     {
 
         $this->facility_types = FacilityType::active()->available()->get();
-        $this->contacts = Contact::available()->get();
+        $this->contacts = Contact::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), fn ($query) => $query->where('user_id', auth()->id()))->get();
         $this->users = User::active()->available()->get();
+        $this->statuses = FacilityStatus::available()->get();
 
-        // $this->name = $this->branch->name;
-        // $this->street = $this->branch->street;
-        // $this->housing_number = $this->branch->housing_number;
-        // $this->zip = $this->branch->zip;
-        // $this->location = $this->branch->location;
-        // $this->contact = $this->branch->contact;
         $this->defineInputs(fn() => [
             'notes' => [
                 [
@@ -84,7 +81,7 @@ class Facility extends Component
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
-            $this->status = $this->facility->status;
+            $this->status = $this->facility->statuses->pluck('id')->toArray();
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
                 'note' => $note->text
@@ -106,7 +103,6 @@ class Facility extends Component
 
         } else {
             $this->facility_type = $this->facility_types->first()?->id;
-            $this->status = StatusEnum::ACTIVE->value;
             $this->fillInputs();
         }
 
@@ -170,7 +166,6 @@ class Facility extends Component
             'facility_type_id' => $this->facility_type,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
-            'status' => $this->status,
         ];
 
 
@@ -199,6 +194,7 @@ class Facility extends Component
                 ]);
             }
         }
+        $facility->statuses()->attach($this->status);
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
     }
@@ -233,7 +229,6 @@ class Facility extends Component
             'facility_type_id' => $this->facility_type,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
-            'status' => $this->status,
         ];
 
 
@@ -270,6 +265,7 @@ class Facility extends Component
                 ]);
             }
         }
+        $this->facility->statuses()->sync($this->status);
 
         return redirect()->route('organization.facility.index'); // Adjust the redirect URL as needed
     }

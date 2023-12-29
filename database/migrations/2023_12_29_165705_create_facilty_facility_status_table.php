@@ -1,6 +1,5 @@
 <?php
 
-use App\Enum\Facility\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('facilties', function (Blueprint $table) {
-            $table->string('status');
+        Schema::create('facilty_facility_status', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('facilty_id')->constrained();
+            $table->foreignId('facility_status_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('facilties', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('facilty_facility_status');
     }
 };

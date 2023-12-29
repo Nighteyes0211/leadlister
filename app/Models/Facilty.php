@@ -44,6 +44,11 @@ class Facilty extends Model
         return $this->belongsToMany(Contact::class);
     }
 
+    public function statuses()
+    {
+        return $this->belongsToMany(FacilityStatus::class, 'facilty_facility_status');
+    }
+
     /**
      * Soft delete model
      */

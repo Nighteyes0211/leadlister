@@ -43,5 +43,15 @@ class RolePermissionSeeder extends Seeder
         $role->givePermissionTo('contact:edit');
         $role->givePermissionTo('facility:delete');
         $role->givePermissionTo('contact:delete');
+
+        $role = Role::findByName(RoleEnum::EMPLOYEE->value);
+        $role->givePermissionTo('facility:index');
+        $role->givePermissionTo('contact:index');
+        $role->givePermissionTo('facility:create');
+        $role->givePermissionTo('contact:create');
+        $role->givePermissionTo('facility:edit');
+        $role->givePermissionTo('contact:edit');
+        $role->givePermissionTo('facility:delete');
+        $role->givePermissionTo('contact:delete');
     }
 }

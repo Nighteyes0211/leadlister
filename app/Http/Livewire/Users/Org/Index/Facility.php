@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Users\Org\Index;
 
 use App\Enum\Facility\StatusEnum;
+use App\Models\FacilityStatus;
 use App\Models\Facilty;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,7 @@ class Facility extends DataTableComponent
     {
         $this->setPrimaryKey('id');
         $this->setAdditionalSelects(['facilties.id as id']);
+        $this->setDefaultSort('facilties.created_at', 'desc');
     }
 
     public function builder(): Builder
@@ -34,7 +36,19 @@ class Facility extends DataTableComponent
             Column::make('Name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Status')
+            Column::make('Status', 'name')
+                ->format(function ($value, $row, Column $column) {
+                    $text = '';
+                    foreach (FacilityStatus::available()->get() as $status) {
+                        if ($row->statuses()->where('facility_statuses.id', $status->id)->exists()) {
+                            $text .= "<span class='badge $status->color m-1'>$status->name</span>";
+                        } else {
+                            $text .= "<span class='badge badge-light m-1'>$status->name</span>";
+                        }
+                    }
+                    return $text;
+                })
+                ->html()
                 ->searchable(),
             ButtonGroupColumn::make('Actions')
                 ->buttons([
@@ -67,7 +81,6 @@ class Facility extends DataTableComponent
             MultiSelectFilter::make('Status')
                 ->options(
                     [
-                        StatusEnum::ACTIVE->value => StatusEnum::ACTIVE->name,
                         StatusEnum::ARRANGE_TELEPHONE_APPOINTMENT->value => StatusEnum::ARRANGE_TELEPHONE_APPOINTMENT->value,
                         StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value => StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value,
                         StatusEnum::INFORMATION_MATERIAL_IS_TO_BE_SENT->value => StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value,

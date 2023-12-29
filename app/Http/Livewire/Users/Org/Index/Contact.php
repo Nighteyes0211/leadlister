@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users\Org\Index;
 
+use App\Enum\RoleEnum;
 use App\Models\Contact as ModelsContact;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class Contact extends DataTableComponent
 
     public function builder(): Builder
     {
-        return ModelsContact::available();
+        return ModelsContact::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), fn ($query) => $query->where('user_id', auth()->id()));
     }
 
     public function columns() : array

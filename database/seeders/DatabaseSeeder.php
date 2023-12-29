@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             FacilityTypeSeeder::class,
             UserSeeder::class,
-            PositionSeeder::class
+            PositionSeeder::class,
+            FacilityStatusSeeder::class
         ]);
     }
 }
