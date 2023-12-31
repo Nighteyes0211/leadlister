@@ -90,7 +90,11 @@ class Facility extends DataTableComponent
                         StatusEnum::INFORMATION_MATERIAL_HAS_BEEN_SENT->value => StatusEnum::TELEPHONE_APPOINTMENT_ARRANGED->value,
                     ]
                 )
-                ->filter(fn ($query, $value) => $query->whereIn('status', $value))
+                ->filter(function ($query, $value) {
+                    return $query->whereHas('statuses', function ($query) use ($value) {
+                        return $query->whereIn('facility_statuses.name', $value);
+                    });
+                })
         ];
     }
 
