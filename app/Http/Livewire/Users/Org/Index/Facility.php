@@ -28,9 +28,7 @@ class Facility extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Facilty::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), function ($query) {
-            $query->whereHas('contacts', fn ($query) => $query->where('contacts.user_id', auth()->id()));
-        });
+        return Facilty::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false));
     }
 
     public function columns() : array

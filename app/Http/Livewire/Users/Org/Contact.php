@@ -26,7 +26,7 @@ class Contact extends Component
     /**
      * Form
      */
-    public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $assign_to;
+    public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $is_internal = true, $assign_to;
 
     public function mount()
     {
@@ -50,6 +50,7 @@ class Contact extends Component
             $this->position = $this->contact->position_id;
             $this->status = $this->contact->status;
             $this->notes = $this->contact->notes;
+            $this->is_internal = $this->contact->is_internal;
             $this->assign_to = $this->contact->user_id;
         }
     }
@@ -71,7 +72,6 @@ class Contact extends Component
             'house_number' => 'nullable|string|max:20', // Adjust max length as needed
             'zip_code' => 'nullable|string|max:20', // Adjust max length as needed
             'location' => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
@@ -90,6 +90,7 @@ class Contact extends Component
             'position_id' => $this->position,
             'status' => $this->status,
             'notes' => $this->notes,
+            'is_internal' => $this->is_internal,
             'user_id' => $this->assign_to,
         ]);
 
@@ -108,7 +109,6 @@ class Contact extends Component
             'house_number' => 'nullable|string|max:20', // Adjust max length as needed
             'zip_code' => 'nullable|string|max:20', // Adjust max length as needed
             'location' => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
             'notes' => 'nullable|string',
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
@@ -127,6 +127,7 @@ class Contact extends Component
             'position_id' => $this->position,
             'status' => $this->status,
             'notes' => $this->notes,
+            'is_internal' => $this->is_internal,
             'user_id' => $this->assign_to,
         ]);
 

@@ -20,11 +20,12 @@ class Contact extends DataTableComponent
     {
         $this->setPrimaryKey('id');
         $this->setAdditionalSelects(['contacts.id as id']);
+        $this->setDefaultSort('created_at', 'desc');
     }
 
     public function builder(): Builder
     {
-        return ModelsContact::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), fn ($query) => $query->where('user_id', auth()->id()));
+        return ModelsContact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false) );
     }
 
     public function columns() : array

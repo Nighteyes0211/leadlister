@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('contact_number', 100)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('status')->default(StatusEnum::ACTIVE->value);
-            
+   w         $table->string('status')->default(StatusEnum::ACTIVE->value);
+
             $table->string('is_deleted')->default(false);
             $table->dateTime('deleted_at')->nullable();
 

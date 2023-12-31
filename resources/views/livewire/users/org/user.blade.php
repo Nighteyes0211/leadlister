@@ -88,16 +88,31 @@
 
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <x-bootstrap.form.input type="email" :col="false" name="email"
                                 label="E-Mail Adresse"></x-bootstrap.form.input>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <x-bootstrap.form.input type="password" :col="false" name="password"
                                 label="Passwort"></x-bootstrap.form.input>
                         </div>
 
-                        <div class="col-lg-4">
+
+                        <div class="col-lg-3 ">
+                            <h4>Group</h4>
+                            <div class="d-flex gap-3">
+                                <label class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="is_internal"  wire:model.defer="is_internal" value="1"> <span
+                                        class="custom-control-label">Is internal</span>
+                                </label>
+                                <label class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="is_internal"  wire:model.defer="is_internal" value="0"> <span
+                                        class="custom-control-label">Is external</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
                             <x-bootstrap.form.select :col="false" name="role" label="Rolle">
                                 @foreach ($roles as $singleRole)
                                     <option value="{{ $singleRole->name }}">{{ $singleRole->name }}</option>

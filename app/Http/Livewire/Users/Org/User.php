@@ -40,7 +40,7 @@ class User extends Component
     /**
      * Form Fields
      */
-    public $first_name, $last_name, $email, $password, $role;
+    public $first_name, $last_name, $email, $password, $is_internal = true, $role;
 
     protected $listeners = ['recordDeletionConfirmed' => 'delete'];
 
@@ -73,6 +73,7 @@ class User extends Component
             $this->last_name = $this->user_record->last_name;
             $this->email = $this->user_record->email;
             $this->role = $this->user_record->roles->first()->name;
+            $this->is_internal = $this->user_record->is_internal;
 
         } else {
             $this->role = RoleEnum::USER->value;
@@ -95,6 +96,7 @@ class User extends Component
             'last_name' => $this->last_name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'is_internal' => $this->is_internal,
         ]);
 
         $user->assignRole($this->role);
@@ -111,6 +113,7 @@ class User extends Component
             'last_name' => $this->last_name,
             'email' => $this->email,
             'password' => $this->password ? Hash::make($this->password) : $this->user_record->password,
+            'is_internal' => $this->is_internal,
         ]);
 
         $this->user_record->syncRoles([$this->role]);

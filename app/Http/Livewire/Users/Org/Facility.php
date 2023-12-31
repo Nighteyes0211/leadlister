@@ -41,6 +41,7 @@ class Facility extends Component
     public $house_number;
     public $zip_code;
     public $location;
+    public $is_internal = true;
     public $contact = [];
     public $facility_type;
     public $tele_appointment = false;
@@ -82,6 +83,7 @@ class Facility extends Component
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
             $this->status = $this->facility->statuses->pluck('id')->toArray();
+            $this->is_internal = $this->facility->is_internal;
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
                 'note' => $note->text
@@ -166,6 +168,7 @@ class Facility extends Component
             'facility_type_id' => $this->facility_type,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
+            'is_internal' => $this->is_internal,
         ];
 
 
@@ -229,6 +232,7 @@ class Facility extends Component
             'facility_type_id' => $this->facility_type,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
+            'is_internal' => $this->is_internal,
         ];
 
 

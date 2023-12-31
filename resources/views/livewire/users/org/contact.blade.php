@@ -30,6 +30,22 @@
                 @endforeach
             </x-bootstrap.form.select>
 
+            <div class="row mb-5">
+                <div class="col-12 col-md-3 col-lg-3">
+                    <h4>Group</h4>
+                </div>
+                <div class="col-sm-12 col-md-7 d-flex gap-3">
+                    <label class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="is_internal"  wire:model.defer="is_internal" value="1"> <span
+                            class="custom-control-label">Is internal</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="is_internal"  wire:model.defer="is_internal" value="0"> <span
+                            class="custom-control-label">Is external</span>
+                    </label>
+                </div>
+            </div>
+
             <x-bootstrap.form.button>Speichern</x-bootstrap.form.button>
 
         </x-bootstrap.form>
