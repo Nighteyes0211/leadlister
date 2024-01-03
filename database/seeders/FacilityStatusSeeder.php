@@ -15,11 +15,12 @@ class FacilityStatusSeeder extends Seeder
     public function run(): void
     {
         foreach (StatusEnum::cases() as $status) {
-            FacilityStatus::firstOrCreate(
+            FacilityStatus::updateOrCreate(
                 [
                     'name' => $status->value,
                 ],
                 [
+                    'name' => $status->german(),
                     'color' => $status->color(),
                 ]
             );

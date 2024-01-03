@@ -19,6 +19,17 @@ enum StatusEnum: string {
             self::INFORMATION_MATERIAL_HAS_BEEN_SENT => 'bg-danger',
         };
     }
+
+    public function german()
+    {
+        return match($this) {
+            self::ARRANGE_TELEPHONE_APPOINTMENT => 'Telefonische Termine Vereinbaren',
+            self::TELEPHONE_APPOINTMENT_ARRANGED => 'TELEFONISCHE TERMINVEREINBARUNG',
+            self::TELEPHONE_APPOINTMENT_CARRIED_OUT => 'TELEFONISCHE TERMINVEREINBARUNG DURCHGEFÜHRT',
+            self::INFORMATION_MATERIAL_IS_TO_BE_SENT => 'INFORMATIONSMATERIAL IST ZU SENDEN',
+            self::INFORMATION_MATERIAL_HAS_BEEN_SENT => 'INFORMATIONSMATERIAL WURDE_GESENDET',
+        };
+    }
 }
 
 ?>
