@@ -23,11 +23,11 @@ enum StatusEnum: string {
     public function german()
     {
         return match($this) {
-            self::ARRANGE_TELEPHONE_APPOINTMENT => 'Telefonische Termine Vereinbaren',
-            self::TELEPHONE_APPOINTMENT_ARRANGED => 'TELEFONISCHE TERMINVEREINBARUNG',
-            self::TELEPHONE_APPOINTMENT_CARRIED_OUT => 'TELEFONISCHE TERMINVEREINBARUNG DURCHGEFÜHRT',
-            self::INFORMATION_MATERIAL_IS_TO_BE_SENT => 'INFORMATIONSMATERIAL IST ZU SENDEN',
-            self::INFORMATION_MATERIAL_HAS_BEEN_SENT => 'INFORMATIONSMATERIAL WURDE_GESENDET',
+            self::ARRANGE_TELEPHONE_APPOINTMENT => 'Telefontermin vereinbaren',
+            self::TELEPHONE_APPOINTMENT_ARRANGED => 'Telefontermin vereinbart',
+            self::TELEPHONE_APPOINTMENT_CARRIED_OUT => 'Telefontermin durchgeführt',
+            self::INFORMATION_MATERIAL_IS_TO_BE_SENT => 'Infomaterial ist zu versenden',
+            self::INFORMATION_MATERIAL_HAS_BEEN_SENT => 'Infomaterial wurde versendet',
         };
     }
 }
