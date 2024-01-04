@@ -34,7 +34,7 @@ class Facility extends DataTableComponent
     public function columns() : array
     {
         return [
-            Column::make('Name')
+            Column::make('Einrichtungsname')
                 ->sortable()
                 ->searchable(),
             Column::make('Status', 'name')
@@ -51,10 +51,10 @@ class Facility extends DataTableComponent
                 })
                 ->html()
                 ->searchable(),
-            ButtonGroupColumn::make('Actions')
+            ButtonGroupColumn::make('Aktionen')
                 ->buttons([
                     LinkColumn::make('Edit') // make() has no effect in this case but needs to be set anyway
-                        ->title(fn ($row) => 'Eidt')
+                        ->title(fn ($row) => 'Bearbeiten')
                         ->location(fn($row) => route('organization.facility.edit', $row))
                         ->attributes(function ($row) {
                             $hideClass = !Auth::user()->can('facility:edit') ? 'd-none' : '';
@@ -63,7 +63,7 @@ class Facility extends DataTableComponent
                             ];
                         }),
                     LinkColumn::make('Delete') // make() has no effect in this case but needs to be set anyway
-                        ->title(fn ($row) => 'Delete')
+                        ->title(fn ($row) => 'Löschen')
                         ->location(fn($row) => "#")
                         ->attributes(function ($row) {
                             $hideClass = !Auth::user()->can('facility:delete') ? 'd-none' : '';

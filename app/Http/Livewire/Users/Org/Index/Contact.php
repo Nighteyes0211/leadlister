@@ -31,24 +31,24 @@ class Contact extends DataTableComponent
     public function columns() : array
     {
         return [
-            Column::make('First name')
+            Column::make('Vorname')
                 ->sortable()
                 ->searchable(),
-            Column::make('Last name')
+            Column::make('Nachname')
                 ->sortable()
                 ->searchable(),
-            Column::make('Location')
+            Column::make('Ort')
                 ->sortable()
                 ->searchable(),
-            Column::make('Facilities', 'id')
+            Column::make('Einrichtungen', 'id')
                 ->format(function ($value, $row, Column $column) { return $row->facilities->pluck('name')->join(' ,'); })
                 ->sortable()
                 ->searchable(),
-            Column::make('Assigned user', 'user_id')
+            Column::make('Zugeordneter Benutzer', 'user_id')
                 ->format(function ($value, $row, Column $column) { return $row->user->fullName(); })
                 ->sortable()
                 ->searchable(),
-            ButtonGroupColumn::make('Actions')
+            ButtonGroupColumn::make('Aktion')
                 ->attributes(function ($row) {
                     return [
                         'class' => 'space-x-2',
@@ -56,7 +56,7 @@ class Contact extends DataTableComponent
                 })
                 ->buttons([
                     LinkColumn::make('Edit') // make() has no effect in this case but needs to be set anyway
-                        ->title(fn ($row) => 'Eidt')
+                        ->title(fn ($row) => 'Bearbeiten')
                         ->location(fn($row) => route('organization.contact.edit', $row->id))
                         ->attributes(function ($row) {
                             $hideClass = !Auth::user()->can('contact:edit') ? 'd-none' : '';
@@ -65,7 +65,7 @@ class Contact extends DataTableComponent
                             ];
                         }),
                     LinkColumn::make('Delete') // make() has no effect in this case but needs to be set anyway
-                        ->title(fn ($row) => 'Delete')
+                        ->title(fn ($row) => 'Löschen')
                         ->location(fn($row) => "#")
                         ->attributes(function ($row) {
                             $hideClass = !Auth::user()->can('contact:delete') ? 'd-none' : '';
