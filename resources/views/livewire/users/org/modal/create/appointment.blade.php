@@ -21,7 +21,14 @@
 
 
                         <x-bootstrap.form.input name="appointment_name" label="Name"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input>
+                        {{-- <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input> --}}
+                        <div wire:ignore>
+                            <x-bootstrap.form.select name="appointment_contact" class="sumoselect" label="Kontakt">
+                                @foreach ($contacts as $singleContact)
+                                    <option  value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
+                                @endforeach
+                            </x-bootstrap.form.select>
+                        </div>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_start_date"
                             label="Startzeit"></x-bootstrap.form.input>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_end_date"
@@ -46,4 +53,13 @@
         </div>
     </div>
 
+    <script>
+
+        document.addEventListener(() => {
+            $('#contact').change(() => {
+                @this.set('contact', $('#contact').find('option:selected'), true)
+            })
+        })
+
+    </script>
 </div>

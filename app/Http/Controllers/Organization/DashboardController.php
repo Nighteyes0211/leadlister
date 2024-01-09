@@ -54,7 +54,7 @@ class DashboardController extends Controller
                 'title' => $appointment->name,
                 'start' => $appointment->start_date,
                 'end' => $appointment->end_date,
-                'contact' => $appointment->contact,
+                'contact' => $appointment->contact?->fullName() ?: 'N/A',
                 'appointment_start_time' => parseDate($appointment->start_date, 'M j, Y h:i A'),
                 'appointment_end_time' => parseDate($appointment->end_date, 'M j, Y h:i A'),
                 'user' => $appointment->user->fullName()

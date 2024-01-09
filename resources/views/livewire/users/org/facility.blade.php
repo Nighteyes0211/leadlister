@@ -117,8 +117,8 @@
 
                         @if ($facility)
                             <div class="mt-2">
-                                @foreach ($facility->contacts as $singleContact)
-                                    <p>{!! ($singleContact->first_name ? $singleContact->first_name . ' ' . $singleContact->last_name : $singleContact->email ). ' | ' . ($singleContact->position ?: '<span class="text-muted">Keine Position</span>') . ' | ' . ($singleContact->telephone ?: '<span class="text-muted">Keine Telefonnummer</span>') !!}</p>
+                                @foreach ($facility->contacts()->available()->get() as $singleContact)
+                                    <p>{!! ($singleContact->first_name ? $singleContact->first_name . ' ' . $singleContact->last_name : $singleContact->email ). ' | ' . ($singleContact->position ?: '<span class="text-muted">No Position</span>') . ' | ' . ($singleContact->telephone ?: '<span class="text-muted">No Telephone</span>') !!}</p>
                                 @endforeach
                             </div>
                         @endif
@@ -143,7 +143,7 @@
                     </x-bootstrap.form.input>
                 </div>
             @endforeach
-<!-- 
+<!--
             <div class="row mb-5">
                 <div class="col-12 col-md-3 col-lg-3">
                     <h4>Gruppe</h4>

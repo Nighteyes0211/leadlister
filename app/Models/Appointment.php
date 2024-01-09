@@ -18,4 +18,9 @@ class Appointment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
+    }
+
 }

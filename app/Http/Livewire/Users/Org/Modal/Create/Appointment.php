@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users\Org\Modal\Create;
 
 use App\Mail\User\NewAppointment;
 use App\Models\Appointment as ModelsAppointment;
+use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -13,7 +14,7 @@ class Appointment extends Component
     /**
      * COllection
      */
-    public $users;
+    public $users, $contacts;
 
     // Form fields
     public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $appointment_user;
@@ -22,6 +23,8 @@ class Appointment extends Component
     {
         $this->users = User::active()->available()->get();
         $this->appointment_user = auth()->user()->id;
+        $this->contacts = Contact::available()->get();
+        $this->appointment_contact = $this->contacts->first()?->id;
     }
 
     public function render()
@@ -41,7 +44,7 @@ class Appointment extends Component
 
         $appointment = ModelsAppointment::create([
             'name' => $this->appointment_name,
-            'contact' => $this->appointment_contact,
+            'contact_id' => $this->appointment_contact,
             'start_date' => $this->appointment_start_date,
             'end_date' => $this->appointment_end_date,
             'user_id' => $this->appointment_user,
