@@ -202,6 +202,12 @@ return [
             'facility:edit',
             'facility:delete',
         ],
+        'facility-type' => [
+            'facility-type:index',
+            'facility-type:create',
+            'facility-type:edit',
+            'facility-type:delete',
+        ],
         'contact' => [
             'contact:index',
             'contact:create',

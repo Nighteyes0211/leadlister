@@ -4,6 +4,7 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\Organization\BranchController;
 use App\Http\Controllers\Organization\ContactController;
 use App\Http\Controllers\Organization\DashboardController;
+use App\Http\Controllers\Organization\FacilityTypeController;
 use App\Http\Controllers\Organization\RoleController;
 use App\Http\Controllers\Organization\UserController;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,15 @@ Route::prefix('dashboard/o/')
                 Route::get('/', [BranchController::class, 'index'])->name('index');
                 Route::get('create', [BranchController::class, 'create'])->name('create');
                 Route::get('{branch:id}/edit', [BranchController::class, 'edit'])->name('edit');
+            });
+
+        # Facility Type
+        Route::prefix('facility-type')
+            ->name('facility-type.')
+            ->group(function () {
+                Route::get('/', [FacilityTypeController::class, 'index'])->name('index');
+                Route::get('create', [FacilityTypeController::class, 'create'])->name('create');
+                Route::get('{facilityType:id}/edit', [FacilityTypeController::class, 'edit'])->name('edit');
             });
 
         # Calendar

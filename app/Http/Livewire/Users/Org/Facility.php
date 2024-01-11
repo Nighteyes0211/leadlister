@@ -57,7 +57,7 @@ class Facility extends Component
     public function mount()
     {
 
-        $this->facility_types = FacilityType::active()->available()->get();
+        $this->facility_types = FacilityType::available()->get();
         $this->contacts = Contact::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), fn ($query) => $query->where('user_id', auth()->id()))->get();
         $this->users = User::active()->available()->get();
         $this->statuses = FacilityStatus::available()->get();

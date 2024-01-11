@@ -56,8 +56,10 @@
     <script>
 
         document.addEventListener('DOMContentLoaded', () => {
+            $('#appointment_user').change(() => {
+                @this.set('appointment_user', $('#appointment_user').find('option:selected').val(), true)
+            })
             $('#appointment_contact').change(() => {
-                console.log($('#appointment_contact').find('option:selected').val());
                 @this.set('appointment_contact', $('#appointment_contact').find('option:selected').val(), true)
             })
         })
