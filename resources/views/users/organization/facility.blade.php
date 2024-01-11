@@ -10,6 +10,8 @@
                 @if (PageModeEnum::INDEX == $mode)
                     <x-dayone.action.btn action="facility:create" title="Add new facility" iconClass="feather-plus"
                         href="{{ route('organization.facility.create') }}"></x-dayone.action.btn>
+                @else
+                    @livewire('users.org.modal.create.appointment')
                 @endif
             </x-dayone.action.list>
 
