@@ -56,6 +56,7 @@
         <x-bootstrap.form method="{{ $mode == PageModeEnum::CREATE ? 'store' : 'edit' }}">
             <x-bootstrap.form.input name="name" label="Name" />
             <x-bootstrap.form.input name="telephone" label="Telefon" />
+            <x-bootstrap.form.input name="email" label="E-mail" />
             <x-bootstrap.form.input name="street" label="Straße" />
             <x-bootstrap.form.input name="house_number" label="Hausnummer" />
             <x-bootstrap.form.input name="zip_code" label="Plz" />
@@ -80,6 +81,11 @@
             <x-bootstrap.form.select name="facility_type" label="Einrichtungstyp">
                 @foreach ($facility_types as $singleFacilityType)
                     <option  value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
+                @endforeach
+            </x-bootstrap.form.select>
+            <x-bootstrap.form.select name="state" label="State" class="sumoselect">
+                @foreach ($states as $singleState)
+                    <option {{ $singleState->id == $facility?->state_id ? 'selected' : '' }} value="{{ $singleState->id }}">{{ $singleState->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
 
@@ -192,6 +198,10 @@
 
             $('#appointment_user').change(() => {
                 @this.set('appointment_user', $('#appointment_user option:selected').val(), true)
+            })
+
+            $('#state').change(() => {
+                @this.set('state', $('#state option:selected').val(), true)
             })
 
         })

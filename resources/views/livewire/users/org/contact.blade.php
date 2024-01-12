@@ -2,6 +2,12 @@
     <x-bootstrap.card>
         <x-bootstrap.form method="{{ $mode == PageModeEnum::EDIT ? 'edit' : 'store' }}">
 
+            <x-bootstrap.form.select name="salutation" label="Anrede">
+                @foreach (\App\Enum\Contact\SalutationEnum::cases() as $singleSalutation)
+                    <option value="{{ $singleSalutation->value }}">{{ $singleSalutation->value }}</option>
+                @endforeach
+            </x-bootstrap.form.select>
+
             <x-bootstrap.form.input name="first_name" label="Vorname" />
             <x-bootstrap.form.input name="last_name" label="Nachname" />
             <x-bootstrap.form.input name="email" label="E-Mail Adresse" type="email" />

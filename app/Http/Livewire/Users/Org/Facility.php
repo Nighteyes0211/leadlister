@@ -13,6 +13,7 @@ use App\Models\FacilityStatus;
 use App\Models\FacilityType;
 use App\Models\Facilty;
 use App\Models\Noteable;
+use App\Models\State;
 use App\Models\User;
 use App\Traits\HasDynamicInput;
 use Illuminate\Support\Arr;
@@ -33,16 +34,18 @@ class Facility extends Component
     /**
      * Collection
      */
-    public $facility_types, $contacts, $users, $statuses;
+    public $facility_types, $contacts, $users, $statuses, $states;
 
     public $name;
     public $telephone;
     public $street;
     public $house_number;
+    public $state;
     public $zip_code;
     public $location;
     public $is_internal = true;
     public $contact = [];
+    public $email;
     public $facility_type;
     public $tele_appointment = false;
     public $info_material = false;
@@ -61,6 +64,7 @@ class Facility extends Component
         $this->contacts = Contact::available()->when(auth()->user()->hasRole(RoleEnum::USER->value), fn ($query) => $query->where('user_id', auth()->id()))->get();
         $this->users = User::active()->available()->get();
         $this->statuses = FacilityStatus::available()->get();
+        $this->states = State::active()->available()->get();
 
         $this->defineInputs(fn() => [
             'notes' => [
@@ -75,10 +79,12 @@ class Facility extends Component
             $this->name = $this->facility->name;
             $this->telephone = $this->facility->telephone;
             $this->street = $this->facility->street;
+            $this->state = $this->facility->state_id ?: $this->states->first()?->id;
             $this->house_number = $this->facility->house_number;
             $this->zip_code = $this->facility->zip_code;
             $this->location = $this->facility->location;
             $this->contact = $this->facility->contacts->pluck('id')->toArray();
+            $this->email = $this->facility->email;
             $this->facility_type = $this->facility->facility_type_id;
             $this->tele_appointment = $this->facility->tele_appointment;
             $this->info_material = $this->facility->info_material;
@@ -105,6 +111,7 @@ class Facility extends Component
 
         } else {
             $this->facility_type = $this->facility_types->first()?->id;
+            $this->state = $this->states->first()?->id;
             $this->fillInputs();
         }
 
@@ -147,6 +154,7 @@ class Facility extends Component
             'facility_type' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
+            'email' => ['nullable', 'email']
         ];
 
         $this->validate(
@@ -168,6 +176,8 @@ class Facility extends Component
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
             'is_internal' => $this->is_internal,
+            'email' => $this->email,
+            'state_id' => $this->state,
         ];
 
 
@@ -217,6 +227,7 @@ class Facility extends Component
             'facility_type' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
+            'email' => ['nullable', 'email']
         ];
         $this->validate(array_merge($rules, $this->inputRules([
             'notes' => [
@@ -235,6 +246,8 @@ class Facility extends Component
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
             'is_internal' => $this->is_internal,
+            'email' => $this->email,
+            'state_id' => $this->state
         ];
 
 

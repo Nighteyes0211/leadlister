@@ -34,7 +34,7 @@ class Facility extends DataTableComponent
     public function columns() : array
     {
         return [
-            Column::make('Einrichtungsname')
+            Column::make('Einrichtungs','name')
                 ->sortable()
                 ->searchable(),
             Column::make('Status', 'name')

@@ -219,6 +219,12 @@ return [
             'branch:create',
             'branch:edit',
             'branch:delete',
+        ],
+        'state' => [
+            'state:index',
+            'state:create',
+            'state:edit',
+            'state:delete',
         ]
     ]
 ];

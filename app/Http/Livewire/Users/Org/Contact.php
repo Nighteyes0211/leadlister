@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users\Org;
 
+use App\Enum\Contact\SalutationEnum;
 use App\Enum\Contact\StatusEnum;
 use App\Enum\PageModeEnum;
 use App\Mail\User\NewAppointment;
@@ -26,7 +27,7 @@ class Contact extends Component
     /**
      * Form
      */
-    public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $is_internal = true, $assign_to;
+    public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $is_internal = true, $salutation, $assign_to;
 
     public function mount()
     {
@@ -37,6 +38,7 @@ class Contact extends Component
             $this->status = StatusEnum::PENDING->value;
             $this->assign_to = auth()->user()->id;
             $this->position = $this->positions->first()?->id;
+            $this->salutation = SalutationEnum::NONE->value;
         } else {
             $this->first_name = $this->contact->first_name;
             $this->last_name = $this->contact->last_name;
@@ -52,6 +54,7 @@ class Contact extends Component
             $this->notes = $this->contact->notes;
             $this->is_internal = $this->contact->is_internal;
             $this->assign_to = $this->contact->user_id;
+            $this->salutation = $this->contact->salutation;
         }
     }
 
@@ -92,6 +95,7 @@ class Contact extends Component
             'notes' => $this->notes,
             'is_internal' => $this->is_internal,
             'user_id' => $this->assign_to,
+            'salutation' => $this->salutation,
         ]);
 
         return redirect()->route('organization.contact.index');
@@ -129,6 +133,7 @@ class Contact extends Component
             'notes' => $this->notes,
             'is_internal' => $this->is_internal,
             'user_id' => $this->assign_to,
+            'salutation' => $this->salutation,
         ]);
 
 

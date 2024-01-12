@@ -2,6 +2,13 @@
 <x-dayone.nav.item href="{{ route('organization.dashboard') }}" iconClass="fa fa-home">Dashboard</x-dayone.nav.item>
 
 
+<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.state.*']" label="State">
+
+    <x-dayone.nav.sub-item action="state:index" href="{{ route('organization.state.index') }}">Übersicht</x-dayone.nav.sub-item>
+    <x-dayone.nav.sub-item action="state:create" href="{{ route('organization.state.create') }}">Erstellen</x-dayone.nav.sub-item>
+
+</x-dayone.nav.parent-item>
+
 <x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility.*']" label="Einrichtungen">
 
     <x-dayone.nav.sub-item action="facility:index" href="{{ route('organization.facility.index') }}">Übersicht</x-dayone.nav.sub-item>
