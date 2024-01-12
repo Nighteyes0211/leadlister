@@ -145,7 +145,6 @@ class Facility extends Component
             'zip_code' => 'nullable|string|max:20',
             'location' => 'nullable|string|max:255',
             'facility_type' => 'required',
-            'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
         ];
@@ -173,7 +172,11 @@ class Facility extends Component
 
 
         $facility = Facilty::create($data);
-        $facility->contacts()->attach($this->contact);
+
+        if ($this->contact)
+        {
+            $facility->contacts()->attach($this->contact);
+        }
 
         foreach ($this->facility_branches as $branch) {
             $createdBranch = $facility->branches()->create([
@@ -212,7 +215,6 @@ class Facility extends Component
             'zip_code' => 'nullable|string|max:20',
             'location' => 'nullable|string|max:255',
             'facility_type' => 'required',
-            'contact' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
         ];
