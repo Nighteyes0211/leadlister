@@ -83,7 +83,7 @@
                     <option  value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
-            <x-bootstrap.form.select name="state" label="State" class="sumoselect">
+            <x-bootstrap.form.select name="state" label="Bundesland" class="sumoselect">
                 @foreach ($states as $singleState)
                     <option {{ $singleState->id == $facility?->state_id ? 'selected' : '' }} value="{{ $singleState->id }}">{{ $singleState->name }}</option>
                 @endforeach

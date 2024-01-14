@@ -2,7 +2,7 @@
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary btn-lg" data-bs-toggle="modal"
         data-bs-target="#appointment_modal">
-        Create Appointment
+        Termin erstellen
     </button>
 
     <!-- Modal -->
@@ -20,7 +20,7 @@
                     <div class="modal-body">
 
 
-                        <x-bootstrap.form.input name="appointment_name" label="Name"></x-bootstrap.form.input>
+                        <x-bootstrap.form.input name="appointment_name" label="Titel"></x-bootstrap.form.input>
                         {{-- <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input> --}}
                         <div wire:ignore>
                             <x-bootstrap.form.select name="appointment_contact" id="appointment_contact" class="sumoselect" label="Kontakt">
