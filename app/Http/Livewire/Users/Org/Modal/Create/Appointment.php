@@ -23,7 +23,7 @@ class Appointment extends Component
     {
         $this->users = User::active()->available()->get();
         $this->appointment_user = auth()->user()->id;
-        $this->contacts = Contact::available()->get();
+        $this->contacts = Contact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false))->get();
         $this->appointment_contact = $this->contacts->first()?->id;
     }
 
