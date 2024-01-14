@@ -78,7 +78,7 @@ class ImportCsv implements ShouldQueue
             }
 
 
-            $facility = Facilty::firstOrCreate(
+            $facility = Facilty::updateOrCreate(
                 [
                     'name' => $row[8],
                 ],
