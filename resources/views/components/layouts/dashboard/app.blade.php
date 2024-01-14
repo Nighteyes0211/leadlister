@@ -76,7 +76,7 @@
                                 <form id="import-data-form" action="{{ route('organization.import.data') }}" method="POST">
                                     @csrf
                                     <input type="file" hidden name="file" id="file" accept=".csv">
-                                    <label for="file" id="import-data" class="btn btn-primary mb-0">Import data</label>
+                                    <label for="file" id="import-data" class="btn btn-primary mb-0">Daten importieren</label>
                                 </form>
                             @endrole
                             <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto"
@@ -114,13 +114,13 @@
                                                 <a class="dropdown-item d-flex"
                                                     href="{{ route('organization.profile') }}">
                                                     <i class="feather feather-user me-3 fs-16 my-auto"></i>
-                                                    <div class="mt-1">Profile</div>
+                                                    <div class="mt-1">Profil</div>
                                                 </a>
 
                                                 <a class="dropdown-item d-flex" href="#"
                                                     onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">
                                                     <i class="feather feather-power me-3 fs-16 my-auto"></i>
-                                                    <div class="mt-1">Log Out</div>
+                                                    <div class="mt-1">Ausloggen</div>
                                                 </a>
 
                                                 <form id="logout-form" action="{{ url('/logout') }}" method="POST"

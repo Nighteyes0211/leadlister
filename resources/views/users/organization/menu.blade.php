@@ -1,5 +1,5 @@
 
-<x-dayone.nav.item href="{{ route('organization.dashboard') }}" iconClass="fa fa-home">Dashboard</x-dayone.nav.item>
+<x-dayone.nav.item href="{{ route('organization.dashboard') }}" iconClass="fa fa-home">Armaturenbrett</x-dayone.nav.item>
 
 
 <x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.state.*']" label="Bundesland">
@@ -37,7 +37,7 @@
 <x-dayone.nav.item href="{{ route('organization.calendar') }}" iconClass="fa fa-calendar">Kalender</x-dayone.nav.item>
 
 
-<x-dayone.nav.parent-item iconClass="fa fa-user" :hrefs="['organization.user.*', 'organization.role.*']" label="User management">
+<x-dayone.nav.parent-item iconClass="fa fa-user" :hrefs="['organization.user.*', 'organization.role.*']" label="Benutzerverwaltung">
 
     <x-dayone.nav.sub-item action="user:index" href="{{ route('organization.user.index') }}">Benutzer</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="role:index" href="{{ route('organization.role.index') }}">Rollen</x-dayone.nav.sub-item>

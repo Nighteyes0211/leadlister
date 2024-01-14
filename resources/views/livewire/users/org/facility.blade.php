@@ -136,7 +136,7 @@
 
             @foreach ($inputs['notes'] as $key => $contact)
                 <div>
-                    <x-bootstrap.form.input type='tel' label='Note {{ $key + 1 }}'
+                    <x-bootstrap.form.input type='tel' label='Notiz {{ $key + 1 }}'
                         name='inputs.notes.{{ $key }}.note'>
                         <div class="mb-3 mt-2">
                             <button class="btn btn-dark" id="noteid-{{ $key }}-add" type="button"
