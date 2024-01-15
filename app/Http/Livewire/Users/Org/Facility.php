@@ -40,13 +40,13 @@ class Facility extends Component
     public $telephone;
     public $street;
     public $house_number;
-    public $state;
+    public $state = "";
     public $zip_code;
     public $location;
     public $is_internal = true;
     public $contact = [];
     public $email;
-    public $facility_type;
+    public $facility_type = "";
     public $tele_appointment = false;
     public $info_material = false;
     public $status = [];
@@ -110,8 +110,8 @@ class Facility extends Component
             ])->toArray() ?: [];
 
         } else {
-            $this->facility_type = $this->facility_types->first()?->id;
-            $this->state = $this->states->first()?->id;
+            // $this->facility_type = $this->facility_types->first()?->id;
+            // $this->state = $this->states->first()?->id;
             $this->fillInputs();
         }
 
@@ -172,12 +172,12 @@ class Facility extends Component
             'house_number' => $this->house_number,
             'zip_code' => $this->zip_code,
             'location' => $this->location,
-            'facility_type_id' => $this->facility_type,
+            'facility_type_id' => $this->facility_type != '' ? $this->facility_type : null,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
             'is_internal' => $this->is_internal,
             'email' => $this->email,
-            'state_id' => $this->state,
+            'state_id' => $this->state != '' ? $this->state : null
         ];
 
 
@@ -242,12 +242,12 @@ class Facility extends Component
             'house_number' => $this->house_number,
             'zip_code' => $this->zip_code,
             'location' => $this->location,
-            'facility_type_id' => $this->facility_type,
+            'facility_type_id' => $this->facility_type != '' ? $this->facility_type : null,
             'tele_appointment' => $this->tele_appointment,
             'info_material' => $this->info_material,
             'is_internal' => $this->is_internal,
             'email' => $this->email,
-            'state_id' => $this->state
+            'state_id' => $this->state != '' ? $this->state : null
         ];
 
 
