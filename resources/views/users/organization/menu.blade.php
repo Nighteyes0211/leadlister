@@ -1,5 +1,5 @@
 
-<x-dayone.nav.item href="{{ route('organization.dashboard') }}" iconClass="fa fa-home">Armaturenbrett</x-dayone.nav.item>
+<x-dayone.nav.item href="{{ route('organization.dashboard') }}" iconClass="fa fa-home">Dashboard</x-dayone.nav.item>
 
 
 <x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.state.*']" label="Bundesland">
