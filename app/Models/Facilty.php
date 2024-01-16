@@ -70,4 +70,12 @@ class Facilty extends Model
         return $query->where('facilties.is_deleted', false);
     }
 
+    public function scopesoftDelete($query)
+    {
+        return $query->update([
+            'is_deleted' => true,
+            'deleted_at' => now(),
+            'deleted_by' => Auth::id()
+        ]);
+    }
 }
