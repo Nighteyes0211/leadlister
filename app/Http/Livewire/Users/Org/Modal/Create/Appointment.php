@@ -17,14 +17,14 @@ class Appointment extends Component
     public $users, $contacts;
 
     // Form fields
-    public $appointment_name, $appointment_contact, $appointment_start_date, $appointment_end_date, $appointment_user;
+    public $appointment_name, $appointment_contact = "", $appointment_start_date, $appointment_end_date, $appointment_user = "";
 
     public function mount()
     {
         $this->users = User::active()->available()->get();
-        $this->appointment_user = auth()->user()->id;
+        // $this->appointment_user = auth()->user()->id;
         $this->contacts = Contact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false))->get();
-        $this->appointment_contact = $this->contacts->first()?->id;
+        // $this->appointment_contact = $this->contacts->first()?->id;
     }
 
     public function render()
@@ -38,6 +38,7 @@ class Appointment extends Component
         $this->validate([
             'appointment_name' => 'required|string|max:255',
             'appointment_contact' => 'required',
+            'appointment_user' => 'required',
             'appointment_start_date' => 'required|date',
             'appointment_end_date' => 'required|date',
         ]);

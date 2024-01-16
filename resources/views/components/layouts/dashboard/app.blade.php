@@ -180,16 +180,6 @@
                 </div>
             </div><!-- end app-content-->
         </div>
-        <footer class="footer">
-            <div class="container">
-                <div class="row align-items-center flex-row-reverse">
-                    <div class="col-md-12 col-sm-12 mt-3 mt-lg-0 text-center">
-                        Copyright © 2023 <a href="#">{{ $website_name }}</a>. Developed by <a
-                            href="https://devop360.com/" target="_blank">devop360</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <!-- Back to top -->

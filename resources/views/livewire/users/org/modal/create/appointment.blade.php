@@ -19,22 +19,32 @@
                 <x-bootstrap.form method="store">
                     <div class="modal-body">
 
-
                         <x-bootstrap.form.input name="appointment_name" label="Titel"></x-bootstrap.form.input>
                         {{-- <x-bootstrap.form.input name="appointment_contact" label="Kontakt"></x-bootstrap.form.input> --}}
-                        <div wire:ignore>
-                            <x-bootstrap.form.select name="appointment_contact" id="appointment_contact" class="sumoselect" label="Kontakt">
-                                @foreach ($contacts as $singleContact)
-                                    <option  value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
-                                @endforeach
-                            </x-bootstrap.form.select>
+                        <div class="mb-3">
+                            <div wire:ignore>
+                                <x-bootstrap.form.select mb="mb-0" name="appointment_contact" id="appointment_contact" class="sumoselect" label="Kontakt">
+                                    <option selected>Bitte auswählen</option>
+                                    @foreach ($contacts as $singleContact)
+                                        <option  value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
+                                    @endforeach
+                                </x-bootstrap.form.select>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-3 col-lg-3"></div>
+                                <div class="col-sm-12 col-md-7">
+                                    @error('appointment_contact') <p class="small text-danger">{{ $message }}</p> @enderror
+                                </div>
+                            </div>
                         </div>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_start_date"
                             label="Startzeit"></x-bootstrap.form.input>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_end_date"
                             label="Endzeit"></x-bootstrap.form.input>
 
-                        <x-bootstrap.form.select name="appointment_user" class="sumoselect" label="Assign To">
+                        <x-bootstrap.form.select name="appointment_user" label="Assign To">
+                            <option value="" selected disabled>Bitte auswählen</option>
                             @foreach ($users as $singleUser)
                                 <option value="{{ $singleUser->id }}">
                                     {{ $singleUser->id == auth()->id() ? 'Me' : $singleUser->fullName() }}</option>
