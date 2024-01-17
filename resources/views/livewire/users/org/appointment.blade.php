@@ -8,7 +8,7 @@
                     <div wire:ignore>
                         <x-bootstrap.form.select mb="mb-0" name="appointment_contact" id="appointment_contact" class="sumoselect" label="Kontakt">
                             @foreach ($contacts as $singleContact)
-                                <option  value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
+                                <option {{ $singleContact->id == $appointment_contact ? 'selected' : '' }}  value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
                             @endforeach
                         </x-bootstrap.form.select>
                     </div>
