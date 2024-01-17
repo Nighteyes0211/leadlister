@@ -18,8 +18,8 @@
 
 <x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility-status.*']" label="Einrichtungsstatus">
 
-    <x-dayone.nav.sub-item action="facility:index" href="{{ route('organization.facility-status.index') }}">Übersicht</x-dayone.nav.sub-item>
-    <x-dayone.nav.sub-item action="facility:create" href="{{ route('organization.facility-status.create') }}">Erstellen</x-dayone.nav.sub-item>
+    <x-dayone.nav.sub-item action="status:index" href="{{ route('organization.facility-status.index') }}">Übersicht</x-dayone.nav.sub-item>
+    <x-dayone.nav.sub-item action="status:create" href="{{ route('organization.facility-status.create') }}">Erstellen</x-dayone.nav.sub-item>
 
 </x-dayone.nav.parent-item>
 
