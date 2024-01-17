@@ -21,13 +21,13 @@ class UserSeeder extends Seeder
         // Create super admin
         $user = User::firstOrCreate(
             [
-                'email' => 'admin@example.com',
+                'email' => 'ismail@devop360.com',
 
             ],
             [
                 'first_name' => 'Super',
                 'last_name' => 'Admin',
-                'password' => Hash::make('password')
+                'password' => Hash::make('devop360')
             ]
         );
         # Asign Role & permissions
