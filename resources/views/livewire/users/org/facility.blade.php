@@ -84,12 +84,26 @@
                     <option  value="{{ $singleFacilityType->id }}">{{ $singleFacilityType->name }}</option>
                 @endforeach
             </x-bootstrap.form.select>
-            <x-bootstrap.form.select name="state" label="Bundesland" class="sumoselect">
-                <option value=""  selected>Bitte auswählen</option>
-                @foreach ($states as $singleState)
-                    <option {{ $singleState->id == $facility?->state_id ? 'selected' : '' }} value="{{ $singleState->id }}">{{ $singleState->name }}</option>
-                @endforeach
-            </x-bootstrap.form.select>
+
+            <div >
+                <div wire:ignore>
+                    <x-bootstrap.form.select mb="mb-0" name="state" label="Bundesland" class="sumoselect">
+                        <option value=""  selected>Bitte auswählen</option>
+                        @foreach ($states as $singleState)
+                            <option {{ $singleState->id == $facility?->state_id ? 'selected' : '' }} value="{{ $singleState->id }}">{{ $singleState->name }}</option>
+                        @endforeach
+                    </x-bootstrap.form.select>
+                </div>
+
+                <div class="row mt-2 mb-3">
+                    <div class="col-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-7">
+                        @error('state')
+                            <p class="text-danger small">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
 
             <div class="row mb-3">
                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Mutterkonzern/Träger</label>
