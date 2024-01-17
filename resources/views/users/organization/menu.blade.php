@@ -16,8 +16,15 @@
 
 </x-dayone.nav.parent-item>
 
+<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility-status.*']" label="Einrichtungsstatus">
 
-<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility-type.*']" label="Art der Anlage">
+    <x-dayone.nav.sub-item action="facility:index" href="{{ route('organization.facility-status.index') }}">Übersicht</x-dayone.nav.sub-item>
+    <x-dayone.nav.sub-item action="facility:create" href="{{ route('organization.facility-status.create') }}">Erstellen</x-dayone.nav.sub-item>
+
+</x-dayone.nav.parent-item>
+
+
+<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility-type.*']" label="Einrichtungenstyp">
 
     <x-dayone.nav.sub-item action="facility-type:index" href="{{ route('organization.facility-type.index') }}">Übersicht</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="facility-type:create" href="{{ route('organization.facility-type.create') }}">Erstellen</x-dayone.nav.sub-item>

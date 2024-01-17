@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users\Org;
 
+use App\Enum\PageModeEnum;
 use App\Models\State as ModelsState;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -17,6 +18,14 @@ class State extends Component
      * Form Fields
      */
     public $name;
+
+    public function mount()
+    {
+        if ($this->mode == PageModeEnum::EDIT)
+        {
+            $this->name = $this->state->name;
+        }
+    }
 
     public function render()
     {

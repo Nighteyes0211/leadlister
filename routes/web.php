@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\Organization\AppointmentController;
 use App\Http\Controllers\Organization\BranchController;
 use App\Http\Controllers\Organization\ContactController;
 use App\Http\Controllers\Organization\DashboardController;
+use App\Http\Controllers\Organization\FacilityStatusController;
 use App\Http\Controllers\Organization\FacilityTypeController;
 use App\Http\Controllers\Organization\RoleController;
 use App\Http\Controllers\Organization\StateController;
@@ -73,6 +75,15 @@ Route::prefix('dashboard/o/')
                 Route::get('{id}/edit', [FacilityController::class, 'edit'])->name('edit');
             });
 
+        # FacilityStatus
+        Route::prefix('facility/status')
+            ->name('facility-status.')
+            ->group(function () {
+                Route::get('/', [FacilityStatusController::class, 'index'])->name('index');
+                Route::get('create', [FacilityStatusController::class, 'create'])->name('create');
+                Route::get('{facility_status:id}/edit', [FacilityStatusController::class, 'edit'])->name('edit');
+            });
+
         # Branch
         Route::prefix('branch')
             ->name('branch.')
@@ -102,6 +113,7 @@ Route::prefix('dashboard/o/')
 
         # Calendar
         Route::get('calendar', [DashboardController::class, 'calendar'])->name('calendar');
+        Route::get('appointment/{appointment:id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
     });
 
 

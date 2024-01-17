@@ -54,7 +54,7 @@
 
     <x-bootstrap.card>
         <x-bootstrap.form method="{{ $mode == PageModeEnum::CREATE ? 'store' : 'edit' }}">
-            <x-bootstrap.form.input name="name" label="Name" />
+            <x-bootstrap.form.input name="name" label="Name mit Rechtsform" />
             <x-bootstrap.form.input name="telephone" label="Telefon" />
             <x-bootstrap.form.input name="email" label="E-mail" />
             <x-bootstrap.form.input name="street" label="Straße" />

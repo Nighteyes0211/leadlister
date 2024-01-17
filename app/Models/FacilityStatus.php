@@ -34,7 +34,6 @@ class FacilityStatus extends Model
     {
         return $this->update([
             'is_deleted' => true,
-            'deleted_at' => now(),
             'deleted_by' => Auth::id()
         ]);
     }

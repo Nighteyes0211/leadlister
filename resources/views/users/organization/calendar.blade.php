@@ -36,9 +36,13 @@
         >
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="appointmentTitle">
-                        Telefontermin Details
-                    </h5>
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h5 class="modal-title mb-0" id="appointmentTitle">
+                            Telefontermin Details
+                        </h5>
+
+                        <a href="#" class="btn btn-primary btn-sm" id="appointment_id">Bearbeiten</a>
+                    </div>
                     <button
                         type="button"
                         class="btn-close"
@@ -136,6 +140,8 @@
                 eventClick: function(arg) {
 
                     modal.find("#user").text(arg.event._def.extendedProps.user);
+                    modal.find("#appointment_id").attr('href', arg.event._def.extendedProps.appointment_edit_link);
+                    console.log(modal.find("#appointment_id"), modal.find("#appointment_id").attr('href'));
                     modal.find("#name").text(arg.event._def.title);
                     modal.find("#contact").text(arg.event._def.extendedProps.contact);
                     modal.find("#start").text(arg.event._def.extendedProps.appointment_start_time);
@@ -143,7 +149,7 @@
 
                     modalOpener.click();
 
-                    console.log(arg.event);
+                    console.log(arg);
                     // if (confirm('Are you sure you want to delete this event?')) {
                     // arg.event.remove()
                     // }

@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Http\Livewire\Users\Org\Modal\Create;
+namespace App\Http\Livewire\Users\Org;
 
-use App\Mail\User\NewAppointment;
-use App\Models\Appointment as ModelsAppointment;
 use App\Models\Contact;
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Appointment extends Component
 {
+
+    /**
+     * Parent
+     */
+    public $appointment;
+
     /**
      * COllection
      */
@@ -23,15 +26,20 @@ class Appointment extends Component
     {
         $this->users = User::active()->available()->get();
         $this->contacts = Contact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false))->get();
+
+        $this->appointment_name = $this->appointment->name;
+        $this->appointment_contact = $this->appointment->contact_id;
+        $this->appointment_start_date = $this->appointment->start_date;
+        $this->appointment_end_date = $this->appointment->end_date;
+        $this->appointment_user = $this->appointment->user_id;
     }
 
     public function render()
     {
-        return view('livewire.users.org.modal.create.appointment');
+        return view('livewire.users.org.appointment');
     }
 
-
-    public function store()
+    public function edit()
     {
         $this->validate([
             'appointment_name' => 'required|string|max:255',
@@ -41,20 +49,14 @@ class Appointment extends Component
             'appointment_end_date' => 'required|date',
         ]);
 
-        $appointment = ModelsAppointment::create([
+        $this->appointment->update([
             'name' => $this->appointment_name,
             'contact_id' => $this->appointment_contact,
+            'user_id' => $this->appointment_user,
             'start_date' => $this->appointment_start_date,
             'end_date' => $this->appointment_end_date,
-            'user_id' => $this->appointment_user,
         ]);
 
-
-        if ($this->appointment_user != auth()->user()->id)
-        {
-            Mail::to(User::find($this->appointment_user))->send(new NewAppointment($appointment));
-        }
-
-        return redirect(request()->header('Referer'));
+        return redirect()->route('organization.calendar');
     }
 }

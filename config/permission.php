@@ -225,6 +225,12 @@ return [
             'state:create',
             'state:edit',
             'state:delete',
+        ],
+        'status' => [
+            'status:index',
+            'status:edit',
+            'status:delete',
+            'status:create',
         ]
     ]
 ];

@@ -39,7 +39,8 @@ class DashboardController extends Controller
             ->get()
             ->pluck('id')
             ->toArray();
-        $appointments = Appointment::where(fn ($query) => $query->where('user_id', auth()->id())->orWhereIn('user_id', $other_users))->get();
+        // $appointments = Appointment::where(fn ($query) => $query->where('user_id', auth()->id())->orWhereIn('user_id', $other_users))->get();
+        $appointments = Appointment::all();
 
         // id: '1',
         // start: curYear + '-' + curMonth + '-02T09:00:00',
@@ -51,6 +52,7 @@ class DashboardController extends Controller
         $appointments = $appointments->map(function ($appointment) {
             return [
                 'id' => $appointment->id,
+                'appointment_edit_link' => route('organization.appointment.edit', $appointment->id),
                 'title' => $appointment->name,
                 'start' => $appointment->start_date,
                 'end' => $appointment->end_date,

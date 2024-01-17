@@ -61,7 +61,8 @@ class Facility extends Component
     {
 
         $this->facility_types = FacilityType::available()->get();
-        $this->contacts = Contact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false))->get();
+        // $this->contacts = Contact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false))->get();
+        $this->contacts = Contact::available()->get();
         $this->users = User::active()->available()->get();
         $this->statuses = FacilityStatus::available()->get();
         $this->states = State::active()->available()->get();
