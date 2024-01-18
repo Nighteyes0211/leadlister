@@ -27,7 +27,7 @@ class Contact extends Component
     /**
      * Form
      */
-    public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $is_internal = true, $salutation, $assign_to;
+    public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $is_internal = true, $salutation, $assign_to, $recieve_promotional_emails = false;
 
     public function mount()
     {
@@ -55,6 +55,7 @@ class Contact extends Component
             $this->is_internal = $this->contact->is_internal;
             $this->assign_to = $this->contact->user_id;
             $this->salutation = $this->contact->salutation;
+            $this->recieve_promotional_emails = $this->contact->recieve_promotional_emails;
         }
     }
 
@@ -68,7 +69,7 @@ class Contact extends Component
         $this->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:contacts,email',
+            'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
             'street' => 'nullable|string|max:255',
@@ -96,6 +97,7 @@ class Contact extends Component
             'is_internal' => $this->is_internal,
             'user_id' => $this->assign_to,
             'salutation' => $this->salutation,
+            'recieve_promotional_emails' => $this->recieve_promotional_emails,
         ]);
 
         return redirect()->route('organization.contact.index');
@@ -106,7 +108,7 @@ class Contact extends Component
         $this->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:contacts,email,' . $this->contact->id,
+            'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
             'street' => 'nullable|string|max:255',
@@ -134,6 +136,7 @@ class Contact extends Component
             'is_internal' => $this->is_internal,
             'user_id' => $this->assign_to,
             'salutation' => $this->salutation,
+            'recieve_promotional_emails' => $this->recieve_promotional_emails,
         ]);
 
 

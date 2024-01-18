@@ -35,6 +35,19 @@
                     <option value="{{ $singleUser->id }}">{{ $singleUser->fullName() }}</option>
                 @endforeach
             </x-bootstrap.form.select>
+            <div class="row my-3">
+
+                <div class="col-12 col-md-3 col-lg-3"></div>
+                <div class="col-sm-12 col-md-7">
+                    <label class="custom-switch">
+                        <input type="checkbox" wire:model.defer="recieve_promotional_emails" id="recieve_promotional_emails"
+                            class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">Wünscht keine Werbemails</span>
+                    </label>
+                </div>
+            </div>
+
 
             <div class="row mb-5">
                 <div class="col-12 col-md-3 col-lg-3">

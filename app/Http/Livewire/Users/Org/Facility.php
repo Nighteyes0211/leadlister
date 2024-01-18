@@ -147,15 +147,15 @@ class Facility extends Component
     {
         $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('facilties')->where('is_deleted', 0)],
-            'telephone' => 'nullable|string|max:20',
-            'street' => 'nullable|string|max:255',
-            'house_number' => 'nullable|string|max:20',
+            'telephone' => 'required|string|max:20',
+            'street' => 'required|string|max:255',
+            'house_number' => 'required|string|max:20',
             'zip_code' => 'nullable|string|max:20',
             'location' => 'nullable|string|max:255',
             'facility_type' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
-            'email' => ['nullable', 'email']
+            'email' => ['required', 'email']
         ];
 
         $this->validate(
@@ -220,15 +220,15 @@ class Facility extends Component
     {
         $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('facilties')->ignore($this->facility->id)->where('is_deleted', 0)],
-            'telephone' => 'nullable|string|max:20',
-            'street' => 'nullable|string|max:255',
-            'house_number' => 'nullable|string|max:20',
+            'telephone' => 'required|string|max:20',
+            'street' => 'required|string|max:255',
+            'house_number' => 'required|string|max:20',
             'zip_code' => 'nullable|string|max:20',
             'location' => 'nullable|string|max:255',
             'facility_type' => 'required',
             'tele_appointment' => 'nullable|boolean',
             'info_material' => 'nullable|boolean',
-            'email' => ['nullable', 'email']
+            'email' => ['required', 'email']
         ];
         $this->validate(array_merge($rules, $this->inputRules([
             'notes' => [
