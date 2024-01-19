@@ -78,13 +78,13 @@
 
     <div class="card">
         <div class="card-body">
-            <div id="calendar" class="position-sticky"></div>
+            <div id="appointment-calendar" class="position-sticky"></div>
         </div>
     </div>
 
     <x-slot name="foot">
         <script src='{{ asset('backend/plugins/fullcalendar/fullcalendar.min.js') }}'></script>
-		{{-- <script src="{{ asset('backend/js/app-calendar-events.js') }}"></script> --}}
+        <script src='{{ asset('backend/plugins/fullcalendar/locale/da.global.min.js') }}'></script>
 
 
         <script>
@@ -105,57 +105,64 @@
             //________ FullCalendar
             document.addEventListener('DOMContentLoaded', function() {
 
-                var calendarEl = document.getElementById('calendar');
+                var calendarEl = document.getElementById('appointment-calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
+                    locale: 'de', // Set the locale to German
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
-                navLinks: true, // can click day/week names to navigate views
-                businessHours: true, // display business hours
-                editable: true,
-                selectable: true,
-                selectMirror: true,
-                droppable: true, // this allows things to be dropped onto the calendar
-                drop: function(arg) {
-                    // is the "remove after drop" checkbox checked?
-                    if (document.getElementById('drop-remove').checked) {
-                    // if so, remove the element from the "Draggable Events" list
-                    arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-                    }
-                },
-                select: function(arg) {
-                    var title = prompt('Event Title:');
-                    if (title) {
-                    calendar.addEvent({
-                        title: title,
-                        start: arg.start,
-                        end: arg.end,
-                        allDay: arg.allDay
-                    })
-                    }
-                    calendar.unselect()
-                },
-                eventClick: function(arg) {
+                    buttonText: {
+                        today: 'Heute',
+                        day: 'Tag',
+                        week:'Woche',
+                        month:'Monat'
+                    },
+                    navLinks: true, // can click day/week names to navigate views
+                    businessHours: true, // display business hours
+                    editable: true,
+                    selectable: true,
+                    selectMirror: true,
+                    droppable: true, // this allows things to be dropped onto the calendar
+                    drop: function(arg) {
+                        // is the "remove after drop" checkbox checked?
+                        if (document.getElementById('drop-remove').checked) {
+                        // if so, remove the element from the "Draggable Events" list
+                        arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+                        }
+                    },
+                    select: function(arg) {
+                        var title = prompt('Event Title:');
+                        if (title) {
+                        calendar.addEvent({
+                            title: title,
+                            start: arg.start,
+                            end: arg.end,
+                            allDay: arg.allDay
+                        })
+                        }
+                        calendar.unselect()
+                    },
+                    eventClick: function(arg) {
 
-                    modal.find("#user").text(arg.event._def.extendedProps.user);
-                    modal.find("#appointment_id").attr('href', arg.event._def.extendedProps.appointment_edit_link);
-                    console.log(modal.find("#appointment_id"), modal.find("#appointment_id").attr('href'));
-                    modal.find("#name").text(arg.event._def.title);
-                    modal.find("#contact").text(arg.event._def.extendedProps.contact);
-                    modal.find("#start").text(arg.event._def.extendedProps.appointment_start_time);
-                    modal.find("#end").text(arg.event._def.extendedProps.appointment_end_time);
+                        modal.find("#user").text(arg.event._def.extendedProps.user);
+                        modal.find("#appointment_id").attr('href', arg.event._def.extendedProps.appointment_edit_link);
+                        console.log(modal.find("#appointment_id"), modal.find("#appointment_id").attr('href'));
+                        modal.find("#name").text(arg.event._def.title);
+                        modal.find("#contact").text(arg.event._def.extendedProps.contact);
+                        modal.find("#start").text(arg.event._def.extendedProps.appointment_start_time);
+                        modal.find("#end").text(arg.event._def.extendedProps.appointment_end_time);
 
-                    modalOpener.click();
+                        modalOpener.click();
 
-                    console.log(arg);
-                    // if (confirm('Are you sure you want to delete this event?')) {
-                    // arg.event.remove()
-                    // }
-                },
-                editable: true,
-                    eventSources: [appointments],
+                        console.log(arg);
+                        // if (confirm('Are you sure you want to delete this event?')) {
+                        // arg.event.remove()
+                        // }
+                    },
+                    editable: true,
+                        eventSources: [appointments],
 
                 });
                 calendar.render();
