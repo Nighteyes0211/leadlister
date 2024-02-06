@@ -9,23 +9,23 @@
 
 </x-dayone.nav.parent-item>
 
-<x-dayone.nav.parent-item iconClass="fa fa-circle-o" :hrefs="['organization.product.*']" label="Product">
+<x-dayone.nav.parent-item iconClass="fa-solid fa-cart-shopping" :hrefs="['organization.product.*']" label="Produkte">
 
     <x-dayone.nav.sub-item action="product:index" href="{{ route('organization.product.index') }}">Übersicht</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="product:create" href="{{ route('organization.product.create') }}">Erstellen</x-dayone.nav.sub-item>
 
 </x-dayone.nav.parent-item>
 
-<x-dayone.nav.item href="{{ route('organization.appointment.index') }}" iconClass="fa fa-circle-o">Appointments</x-dayone.nav.item>
 
-<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility.*']" label="Einrichtungen">
+<x-dayone.nav.parent-item iconClass="fa-regular fa-building" :hrefs="['organization.facility.*']" label="Einrichtungen">
 
     <x-dayone.nav.sub-item action="facility:index" href="{{ route('organization.facility.index') }}">Übersicht</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="facility:create" href="{{ route('organization.facility.create') }}">Erstellen</x-dayone.nav.sub-item>
 
 </x-dayone.nav.parent-item>
 
-<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility-status.*']" label="Einrichtungsstatus">
+
+<x-dayone.nav.parent-item iconClass="fa-regular fa-building" :hrefs="['organization.facility-status.*']" label="Einrichtungsstatus">
 
     <x-dayone.nav.sub-item action="status:index" href="{{ route('organization.facility-status.index') }}">Übersicht</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="status:create" href="{{ route('organization.facility-status.create') }}">Erstellen</x-dayone.nav.sub-item>
@@ -33,7 +33,7 @@
 </x-dayone.nav.parent-item>
 
 
-<x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility-type.*']" label="Einrichtungenstyp">
+<x-dayone.nav.parent-item iconClass="fa-regular fa-building" :hrefs="['organization.facility-type.*']" label="Einrichtungenstyp">
 
     <x-dayone.nav.sub-item action="facility-type:index" href="{{ route('organization.facility-type.index') }}">Übersicht</x-dayone.nav.sub-item>
     <x-dayone.nav.sub-item action="facility-type:create" href="{{ route('organization.facility-type.create') }}">Erstellen</x-dayone.nav.sub-item>
@@ -51,6 +51,10 @@
 
 
 <x-dayone.nav.item href="{{ route('organization.calendar') }}" iconClass="fa fa-calendar">Kalender</x-dayone.nav.item>
+
+<x-dayone.nav.item href="{{ route('organization.appointment.index') }}" iconClass="fa fa-circle-o">Termine</x-dayone.nav.item>
+
+
 
 
 <x-dayone.nav.parent-item iconClass="fa fa-user" :hrefs="['organization.user.*', 'organization.role.*']" label="Benutzerverwaltung">

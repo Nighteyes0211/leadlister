@@ -25,7 +25,7 @@
                 <x-bootstrap.form.input type="datetime-local" name="appointment_end_date"
                     label="Endzeit"></x-bootstrap.form.input>
 
-                <x-bootstrap.form.select name="appointment_user" label="Assign To">
+                <x-bootstrap.form.select name="appointment_user" label="Benutzer zuweisen">
                     <option value="" selected disabled>Bitte auswählen</option>
                     @foreach ($users as $singleUser)
                         <option value="{{ $singleUser->id }}">
@@ -44,7 +44,7 @@
                 <a  class="btn btn-secondary" href="{{ route('organization.calendar') }}">
                     Zurück
                 </a>
-                <button type="submit" class="btn btn-primary">Einreichen</button>
+                <button type="submit" class="btn btn-primary">Speichern</button>
             </div>
         </x-bootstrap.form>
     </x-bootstrap.card>

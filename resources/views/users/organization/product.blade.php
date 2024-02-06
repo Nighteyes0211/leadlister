@@ -1,14 +1,14 @@
-<x-layouts.dashboard.app title="Product">
+<x-layouts.dashboard.app title="Produkte">
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Product</x-dayone.page.title>
+            <x-dayone.page.title>Produkte</x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 
             <x-dayone.action.list>
                 @if (PageModeEnum::INDEX == $mode)
-                    <x-dayone.action.btn action="product:create" title="Add new Product" iconClass="feather-plus"
+                    <x-dayone.action.btn action="product:create" title="Neues Produkt hinzufügen" iconClass="feather-plus"
                         href="{{ route('organization.product.create') }}"></x-dayone.action.btn>
                 @endif
             </x-dayone.action.list>

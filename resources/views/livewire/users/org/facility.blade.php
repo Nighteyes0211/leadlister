@@ -80,14 +80,14 @@
                             </div>
                         </div>
 
-                        <x-bootstrap.form.input type="number" name="product_quantity" label="Product Quantity" />
+                        <x-bootstrap.form.input type="number" name="product_quantity" label="Anzahl" />
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
+                            Schließen
                         </button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Speichern</button>
                     </div>
                 </x-bootstrap.form>
             </div>
@@ -151,18 +151,20 @@
                 </div>
             </div>
 
+        <hr />
+
             <div class="row mb-3">
-                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Products</label>
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Produkte</label>
                 <div class="col-sm-12 col-md-7">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Scope</th>
-                                <th>Lesson Type</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Action</th>
+                                <th>Produkt</th>
+                                <th>Umfang</th>
+                                <th>Unterrichtsart</th>
+                                <th>Preis</th>
+                                <th>Anzahl</th>
+                                <th>Aktion</th>
                             </tr>
                         </thead>
 
@@ -191,11 +193,11 @@
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary btn-md" id="product_modal-opener" data-bs-toggle="modal"
                     data-bs-target="#facility_modal">
-                        Add Product
+                        Produkt hinzufügen
                     </button>
                 </div>
             </div>
-
+            <hr />
             <div>
                 <div wire:ignore>
                     <x-bootstrap.form.select name="contact"  label="Kontakt" multiple>
@@ -214,7 +216,7 @@
 
                         @if ($mode == PageModeEnum::EDIT)
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#create_contact_modal">Create new contact</button>
+                            data-bs-target="#create_contact_modal">Kontakt erstellen</button>
                         @endif
 
                         @if ($facility)
@@ -228,7 +230,7 @@
                 </div>
             </div>
 
-
+<hr />
 
             @foreach ($inputs['notes'] as $key => $singleNote)
                 <div>
