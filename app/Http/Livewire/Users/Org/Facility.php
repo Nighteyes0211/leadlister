@@ -13,6 +13,7 @@ use App\Models\FacilityStatus;
 use App\Models\FacilityType;
 use App\Models\Facilty;
 use App\Models\Noteable;
+use App\Models\Product;
 use App\Models\State;
 use App\Models\User;
 use App\Traits\HasDynamicInput;
@@ -20,11 +21,14 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use App\Models\Productable;
 
 class Facility extends Component
 {
 
     use HasDynamicInput;
+
+    protected $listeners = ['contactCreated' => 'assignContact'];
 
     /**
      * Parent
@@ -34,7 +38,7 @@ class Facility extends Component
     /**
      * Collection
      */
-    public $facility_types, $contacts, $users, $statuses, $states;
+    public $facility_types, $contacts, $users, $statuses, $states, $products;
 
     public $name;
     public $telephone;
@@ -57,6 +61,10 @@ class Facility extends Component
     public $branch_name, $branch_street, $branch_housing_number, $branch_zip, $branch_location, $branch_contact = [];
     public $facility_branches = [];
 
+    // Productable
+    public $product, $product_quantity = 1;
+    public $facility_products = [];
+
     public function mount()
     {
 
@@ -66,6 +74,8 @@ class Facility extends Component
         $this->users = User::active()->available()->get();
         $this->statuses = FacilityStatus::available()->get();
         $this->states = State::active()->available()->get();
+        $this->products = Product::active()->available()->get();
+        $this->product = $this->products->first()?->id;
 
         $this->defineInputs(fn() => [
             'notes' => [
@@ -93,7 +103,9 @@ class Facility extends Component
             $this->is_internal = $this->facility->is_internal;
             $this->inputs['notes'] = $this->facility->notes->map(fn ($note) => [
                 'id' => $note->id,
-                'note' => $note->text
+                'note' => $note->text,
+                'created_by' => $note->createdBy?->fullName(),
+                'created_at' => parseDate($note->created_at),
             ])->toArray() ?: [
                 [
                     'id' => null,
@@ -110,6 +122,23 @@ class Facility extends Component
                 'contact' => $branch->contact_id,
             ])->toArray() ?: [];
 
+            // td>{{ $singleProduct['scope'] }}</td>
+
+            //                         <td>{{ $singleProduct['lesson_type'] }}</td>
+
+            //                         <td>{{ $singleProduct['price'] }}</td>
+
+            //                         <td>{{ $singleProduct['quantity'] }}</td>
+            $this->facility_products = $this->facility->products()->get()->map(fn ($product) => [
+                'id' => $product->id,
+                'product' => $product->product->id,
+                'name' => $product->product->name,
+                'scope' => $product->product->scope,
+                'lesson_type' => $product->product->lesson_type,
+                'price' => $product->product->price,
+                'quantity' => $product->quantity,
+            ])->toArray() ?: [];
+
         } else {
             // $this->facility_type = $this->facility_types->first()?->id;
             // $this->state = $this->states->first()?->id;
@@ -118,6 +147,11 @@ class Facility extends Component
 
         // dd($this->inputs['notes']);
 
+    }
+
+    public function assignContact($contact)
+    {
+        $this->contact[] = $contact['id'];
     }
 
     public function render()
@@ -161,7 +195,7 @@ class Facility extends Component
         $this->validate(
             array_merge($rules, $this->inputRules([
                 'notes' => [
-                    'note' => ['max:200']
+                    'note' => ['max:3000']
                 ]
             ]))
         );
@@ -203,6 +237,16 @@ class Facility extends Component
                 $createdBranch->contacts()->attach($branch['contact']);
             }
         }
+
+
+        # Store products
+        foreach ($this->facility_products as $product) {
+            $facility->products()->create([
+                'product_id' => $product['product'],
+                'quantity' => $product['quantity'],
+            ]);
+        }
+
         foreach ($this->inputs['notes'] as $note) {
             if ($note['note'])
             {
@@ -232,7 +276,7 @@ class Facility extends Component
         ];
         $this->validate(array_merge($rules, $this->inputRules([
             'notes' => [
-                'note' => ['nullable', 'max:200']
+                'note' => ['nullable', 'max:3000']
             ]
         ])));
 
@@ -273,6 +317,18 @@ class Facility extends Component
             }
 
         }
+
+        foreach ($this->facility_products as $product) {
+            $this->facility->products()->updateOrCreate(
+                    [
+                        'id' => $product['id']
+                    ],
+                    [
+                    'product_id' => $product['product'],
+                    'quantity' => $product['quantity'],
+                ]);
+        }
+
         foreach ($this->inputs['notes'] as $note) {
             if ($note['note'])
             {
@@ -314,6 +370,41 @@ class Facility extends Component
 
         $this->reset('branch_name', 'branch_street', 'branch_housing_number', 'branch_zip', 'branch_location', 'branch_contact');
         $this->emit('closeModal', 'branch_modal');
+    }
+
+    public function addProduct()
+    {
+
+        $this->validate([
+            'product' => ['required'],
+            'product_quantity' => 'required|numeric',
+        ]);
+
+        $product = Product::find($this->product);
+
+        $this->facility_products[] = [
+            'id' => null,
+            'product' => $this->product,
+            'name' => $product->name,
+            'scope' => $product->scope,
+            'lesson_type' => $product->lesson_type,
+            'price' => $product->price,
+            'quantity' => $this->product_quantity,
+        ];
+
+        $this->reset('product_quantity');
+        $this->emit('toast', [
+            'message' => 'Product added successfully',
+        ]);
+    }
+
+    public function removeProduct(int $key)
+    {
+
+        $product = $this->facility_products[$key];
+        $id = array_key_exists('id', $product) ? $product['id'] : '';
+        $id ? Productable::find($id)->delete() : '';
+        unset($this->facility_products[$key]);
     }
 
 }

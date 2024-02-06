@@ -9,6 +9,15 @@
 
 </x-dayone.nav.parent-item>
 
+<x-dayone.nav.parent-item iconClass="fa fa-circle-o" :hrefs="['organization.product.*']" label="Product">
+
+    <x-dayone.nav.sub-item action="product:index" href="{{ route('organization.product.index') }}">Übersicht</x-dayone.nav.sub-item>
+    <x-dayone.nav.sub-item action="product:create" href="{{ route('organization.product.create') }}">Erstellen</x-dayone.nav.sub-item>
+
+</x-dayone.nav.parent-item>
+
+<x-dayone.nav.item href="{{ route('organization.appointment.index') }}" iconClass="fa fa-circle-o">Appointments</x-dayone.nav.item>
+
 <x-dayone.nav.parent-item iconClass="fa fa-users" :hrefs="['organization.facility.*']" label="Einrichtungen">
 
     <x-dayone.nav.sub-item action="facility:index" href="{{ route('organization.facility.index') }}">Übersicht</x-dayone.nav.sub-item>

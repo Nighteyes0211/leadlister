@@ -55,9 +55,13 @@
                     {{-- $table->string('name');
             $table->string('contact'); --}}
 
+                    <p>Status: <span id="status"></span></p>
                     <p>Benutzer: <span id="user"></span></p>
                     <p>Name: <span id="name"></span></p>
-                    <p>Kontakt: <span id="contact"></span></p>
+                    <p>Kontakt: <a class="text-primary" href="#" id="contact"></a></p>
+                    <p>Telephone: <span id="phone_number"></span></p>
+                    <p>Position: <span id="position"></span></p>
+                    <p>Facilities: <span id="facilities"></span></p>
                     <p>Start: <span id="start"></span></p>
                     <p>Ende: <span id="end"></span></p>
 
@@ -148,15 +152,20 @@
 
                         modal.find("#user").text(arg.event._def.extendedProps.user);
                         modal.find("#appointment_id").attr('href', arg.event._def.extendedProps.appointment_edit_link);
-                        console.log(modal.find("#appointment_id"), modal.find("#appointment_id").attr('href'));
                         modal.find("#name").text(arg.event._def.title);
+                        modal.find('#position').text(arg.event._def.extendedProps.position);
+                        modal.find('#phone_number').text(arg.event._def.extendedProps.phone_number);
+                        modal.find('#facilities').text(arg.event._def.extendedProps.facilities);
                         modal.find("#contact").text(arg.event._def.extendedProps.contact);
+                        console.log(modal.find("#contact"), arg.event._def.extendedProps);
+                        modal.find("#contact").attr('href', arg.event._def.extendedProps.contact_link);
                         modal.find("#start").text(arg.event._def.extendedProps.appointment_start_time);
                         modal.find("#end").text(arg.event._def.extendedProps.appointment_end_time);
+                        modal.find("#status").text(arg.event._def.extendedProps.status);
+                        modal.find("#status").removeClass()
+                        modal.find("#status").addClass(arg.event._def.extendedProps.status_class)
 
                         modalOpener.click();
-
-                        console.log(arg);
                         // if (confirm('Are you sure you want to delete this event?')) {
                         // arg.event.remove()
                         // }

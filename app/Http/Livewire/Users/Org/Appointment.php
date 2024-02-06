@@ -20,7 +20,7 @@ class Appointment extends Component
     public $users, $contacts;
 
     // Form fields
-    public $appointment_name, $appointment_contact = "", $appointment_start_date, $appointment_end_date, $appointment_user = "";
+    public $appointment_name, $appointment_contact = "", $appointment_start_date, $appointment_end_date, $appointment_user = "", $status;
 
     public function mount()
     {
@@ -32,6 +32,7 @@ class Appointment extends Component
         $this->appointment_start_date = $this->appointment->start_date;
         $this->appointment_end_date = $this->appointment->end_date;
         $this->appointment_user = $this->appointment->user_id;
+        $this->status = $this->appointment->status;
     }
 
     public function render()
@@ -55,6 +56,7 @@ class Appointment extends Component
             'user_id' => $this->appointment_user,
             'start_date' => $this->appointment_start_date,
             'end_date' => $this->appointment_end_date,
+            'status' => $this->status,
         ]);
 
         return redirect()->route('organization.calendar');

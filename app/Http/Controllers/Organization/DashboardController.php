@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Organization;
 
+use App\Enum\Appointment\StatusEnum;
 use App\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\ImportCsv;
@@ -57,6 +58,12 @@ class DashboardController extends Controller
                 'start' => $appointment->start_date,
                 'end' => $appointment->end_date,
                 'contact' => $appointment->contact?->fullName() ?: 'N/A',
+                'contact_link' => $appointment->contact ? route('organization.contact.edit', $appointment->contact?->id) : '#',
+                'position' => $appointment->contact?->position?->name ?: 'N/A',
+                'phone_number' => $appointment->contact?->mobile ?: 'N/A',
+                'facilities' => $appointment->contact?->facilities->pluck('name')->join(', ') ?: 'N/A',
+                'status' => StatusEnum::tryFrom($appointment->status)->label(),
+                'status_class' => $appointment->status == StatusEnum::PENDING->value ? 'badge bg-warning' : 'badge bg-success',
                 'appointment_start_time' => parseDate($appointment->start_date, 'M j, Y h:i A'),
                 'appointment_end_time' => parseDate($appointment->end_date, 'M j, Y h:i A'),
                 'user' => $appointment->user->fullName()

@@ -33,6 +33,12 @@
                     @endforeach
                 </x-bootstrap.form.select>
 
+
+                <x-bootstrap.form.select name="status" label="Status">
+                    <option value="{{ \App\Enum\Appointment\StatusEnum::PENDING->value }}" >{{ \App\Enum\Appointment\StatusEnum::PENDING->label() }}</option>
+                    <option value="{{ \App\Enum\Appointment\StatusEnum::DONE->value }}" >{{ \App\Enum\Appointment\StatusEnum::DONE->label() }}</option>
+                </x-bootstrap.form.select>
+
             </div>
             <div class="d-flex justify-content-end gap-3">
                 <a  class="btn btn-secondary" href="{{ route('organization.calendar') }}">

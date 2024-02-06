@@ -49,6 +49,11 @@ class Facilty extends Model
         return $this->belongsToMany(FacilityStatus::class, 'facilty_facility_status');
     }
 
+    public function products()
+    {
+        return $this->morphMany(Productable::class, 'productable');
+    }
+
     /**
      * Soft delete model
      */

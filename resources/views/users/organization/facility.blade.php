@@ -11,7 +11,11 @@
                     <x-dayone.action.btn action="facility:create" title="Add new facility" iconClass="feather-plus"
                         href="{{ route('organization.facility.create') }}"></x-dayone.action.btn>
                 @else
-                    @livewire('users.org.modal.create.appointment')
+                    <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                        data-bs-target="#facility_modal">Add Product</button>
+                        @livewire('users.org.modal.create.appointment')
+                    </div>
                 @endif
             </x-dayone.action.list>
 

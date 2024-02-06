@@ -231,6 +231,12 @@ return [
             'status:edit',
             'status:delete',
             'status:create',
+        ],
+        'product' => [
+            'product:index',
+            'product:create',
+            'product:edit',
+            'product:delete',
         ]
     ]
 ];

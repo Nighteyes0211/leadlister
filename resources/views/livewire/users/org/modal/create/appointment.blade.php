@@ -40,8 +40,6 @@
                         </div>
                         <x-bootstrap.form.input type="datetime-local" name="appointment_start_date"
                             label="Startzeit"></x-bootstrap.form.input>
-                        <x-bootstrap.form.input type="datetime-local" name="appointment_end_date"
-                            label="Endzeit"></x-bootstrap.form.input>
 
                         <x-bootstrap.form.select name="appointment_user" label="Assign To">
                             <option value="" selected disabled>Bitte auswählen</option>

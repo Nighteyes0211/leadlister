@@ -7,6 +7,7 @@ use App\Http\Controllers\Organization\ContactController;
 use App\Http\Controllers\Organization\DashboardController;
 use App\Http\Controllers\Organization\FacilityStatusController;
 use App\Http\Controllers\Organization\FacilityTypeController;
+use App\Http\Controllers\Organization\ProductController;
 use App\Http\Controllers\Organization\RoleController;
 use App\Http\Controllers\Organization\StateController;
 use App\Http\Controllers\Organization\UserController;
@@ -113,7 +114,18 @@ Route::prefix('dashboard/o/')
 
         # Calendar
         Route::get('calendar', [DashboardController::class, 'calendar'])->name('calendar');
+        Route::get('appointment', [AppointmentController::class, 'index'])->name('appointment.index');
         Route::get('appointment/{appointment:id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
+
+
+        # Product
+        Route::prefix('product')
+            ->name('product.')
+            ->group(function () {
+                Route::get('/', [ProductController::class, 'index'])->name('index');
+                Route::get('create', [ProductController::class, 'create'])->name('create');
+                Route::get('{product:id}/edit', [ProductController::class, 'edit'])->name('edit');
+            });
     });
 
 

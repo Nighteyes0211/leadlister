@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Users\Org\Index;
 
-use App\Enum\RoleEnum;
-use App\Models\Contact as ModelsContact;
+use App\Models\Product as ModelsProduct;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -12,45 +11,42 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
-class Contact extends DataTableComponent
+class Product extends DataTableComponent
 {
-    protected $listeners = ['recordDeletionConfirmed' => 'delete'];
+
+    public function builder(): Builder
+    {
+        return ModelsProduct::available();
+    }
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
-        $this->setAdditionalSelects(['contacts.id as id']);
         $this->setDefaultSort('created_at', 'desc');
+        $this->setAdditionalSelects(['products.id as id']);
     }
 
-    public function builder(): Builder
-    {
-        return ModelsContact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false) );
-    }
 
-    public function columns() : array
+    public function columns(): array
     {
+
         return [
-            Column::make('Anrede', 'salutation')
-                ->sortable()
-                ->searchable(),
-            Column::make('Vorname', 'first_name')
-                ->sortable()
-                ->searchable(),
-            Column::make('Nachname', 'last_name')
-                ->sortable()
-                ->searchable(),
-            Column::make('Ort', 'location')
-                ->sortable()
-                ->searchable(),
-            Column::make('Einrichtungen', 'id')
-                ->format(function ($value, $row, Column $column) { return $row->facilities()->available()->get()->pluck('name')->join(' ,'); })
-                ->sortable()
-                ->searchable(),
-            Column::make('Zugeordneter Benutzer', 'user_id')
-                ->format(function ($value, $row, Column $column) { return $row->user->fullName(); })
-                ->sortable()
-                ->searchable(),
+            Column::make('Name', 'name')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Scope', 'scope')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Lesson Type', 'lesson_type')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('Price', 'price')
+                ->searchable()
+                ->sortable(),
+
             ButtonGroupColumn::make('Aktion')
                 ->attributes(function ($row) {
                     return [
@@ -60,9 +56,9 @@ class Contact extends DataTableComponent
                 ->buttons([
                     LinkColumn::make('Edit') // make() has no effect in this case but needs to be set anyway
                         ->title(fn ($row) => 'Bearbeiten')
-                        ->location(fn($row) => route('organization.contact.edit', $row->id))
+                        ->location(fn($row) => route('organization.product.edit', $row->id))
                         ->attributes(function ($row) {
-                            $hideClass = !Auth::user()->can('contact:edit') ? 'd-none' : '';
+                            $hideClass = !Auth::user()->can('product:edit') ? 'd-none' : '';
                             return [
                                 'class' => "btn {$hideClass} btn-sm btn-info",
                             ];
@@ -71,15 +67,16 @@ class Contact extends DataTableComponent
                         ->title(fn ($row) => 'Löschen')
                         ->location(fn($row) => "#")
                         ->attributes(function ($row) {
-                            $hideClass = !Auth::user()->can('contact:delete') ? 'd-none' : '';
+                            $hideClass = !Auth::user()->can('product:delete') ? 'd-none' : '';
                             return [
                                 'class' => "btn {$hideClass} btn-sm btn-danger",
-                                'wire:click' => "deleteConfirmation({$row->id})"
+                                'wire:click' => "deleteConfirmation($row->id)"
                             ];
                         }),
-                ]),
-        ];
+                    ])
+            ];
     }
+
 
     public function deleteConfirmation($record_id)
     {
@@ -89,9 +86,10 @@ class Contact extends DataTableComponent
 
     public function delete(int $record_id)
     {
-
-        $record = ModelsContact::find($record_id);
+        dd($record_id);
+        $record = ModelsProduct::find($record_id);
         $record->softDelete();
 
     }
+
 }

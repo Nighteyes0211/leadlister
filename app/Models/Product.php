@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Enum\Contact\StatusEnum;
+use App\Enum\Product\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Contact extends Model
+class Product extends Model
 {
     use HasFactory;
 
@@ -27,32 +27,6 @@ class Contact extends Model
         });
     }
 
-
-    /**
-     * Relationships
-     *
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function facilities()
-    {
-        return $this->belongsToMany(Facilty::class);
-    }
-
-    public function notes()
-    {
-        return $this->morphMany(Noteable::class, 'notable');
-    }
-
-    public function products()
-    {
-        return $this->morphMany(Productable::class, 'productable');
-    }
-
-
     /**
      * Soft delete model
      */
@@ -69,14 +43,14 @@ class Contact extends Model
     /**
      * Scopes
      */
+    public function scopeactive($query)
+    {
+        return $query->where('status', StatusEnum::ACTIVE);
+    }
+
     public function scopeavailable($query)
     {
         return $query->where('is_deleted', false);
     }
 
-
-    public function fullName()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
 }

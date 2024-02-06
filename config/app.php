@@ -70,7 +70,10 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'time' => [
+        'timezone' => 'UTC',
+        'max_execution_time' => env('MAX_EXECUTION_TIME', 300), // Use the value from the .env file or default to 300 seconds
+    ],
 
     /*
     |--------------------------------------------------------------------------

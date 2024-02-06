@@ -72,13 +72,13 @@
                                     class="create-reservation-btn d-none px-4">Reserve</x-bootstrap.button>
 
                         <div class="d-flex order-lg-2 my-auto">
-                            @role(RoleEnum::SUPERADMINISTRATOR->value)
+                            {{-- @role(RoleEnum::SUPERADMINISTRATOR->value)
                                 <form id="import-data-form" action="{{ route('organization.import.data') }}" method="POST">
                                     @csrf
                                     <input type="file" hidden name="file" id="file" accept=".csv">
                                     <label for="file" id="import-data" class="btn btn-primary mb-0">Daten importieren</label>
                                 </form>
-                            @endrole
+                            @endrole --}}
                             <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto"
                                 type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
                                 aria-controls="navbarSupportedContent-4" aria-expanded="false"
