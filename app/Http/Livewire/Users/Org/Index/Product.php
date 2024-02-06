@@ -35,15 +35,15 @@ class Product extends DataTableComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Scope', 'scope')
+            Column::make('Umfang', 'scope')
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Lesson Type', 'lesson_type')
+            Column::make('Unterrichtsart', 'lesson_type')
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Price', 'price')
+            Column::make('Preis', 'price')
                 ->searchable()
                 ->sortable(),
 
