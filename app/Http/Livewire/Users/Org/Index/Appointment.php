@@ -25,18 +25,18 @@ class Appointment extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Title', 'name')
+            Column::make('Titel', 'name')
                 ->searchable()
                 ->sortable(),
-            Column::make('Start Time', 'start_date')
+            Column::make('Startzeit', 'start_date')
                 ->format(fn ($value, $row, Column $column) => parseDate($value, 'M j, Y h:i A'))
                 ->searchable()
                 ->sortable(),
-            Column::make('End Time', 'end_date')
+            Column::make('Endzeit', 'end_date')
                 ->format(fn ($value, $row, Column $column) => parseDate($value, 'M j, Y h:i A'))
                 ->searchable()
                 ->sortable(),
-            Column::make('Contact', 'contact_id')
+            Column::make('Kontakt', 'contact_id')
                 ->format(function ($value, $row, Column $column) {
                     $name = $row->contact?->fullName();
                     $link = $row->contact ? route('organization.contact.edit', $row->contact) : '#';
@@ -49,11 +49,11 @@ class Appointment extends DataTableComponent
                 ->format(fn ($value, $row, Column $column) => $row->contact?->position?->name)
                 ->searchable()
                 ->sortable(),
-            Column::make('Phone Number', 'contact_id')
+            Column::make('TelNr', 'contact_id')
                 ->format(fn ($value, $row, Column $column) => $row->contact?->mobile)
                 ->searchable()
                 ->sortable(),
-            Column::make('Facilities', 'contact_id')
+            Column::make('Einrichtungen', 'contact_id')
                 ->format(fn ($value, $row, Column $column) => $row->contact?->facilities->pluck('name')->join(', '))
                 ->searchable()
                 ->sortable(),

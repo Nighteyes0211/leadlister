@@ -1,3 +1,17 @@
+<style>
+    hr {
+        box-sizing: content-box;
+        height: 0;
+        overflow: visible;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+        border: 0;
+        border-top: 1px solid #858585;
+    }
+
+
+</style>
+
 <div>
 
     <!-- Modal -->
@@ -135,7 +149,7 @@
                     </div>
                 </div>
             </div>
-
+<hr />
             <div class="row mb-3">
                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Mutterkonzern/Träger</label>
                 <div class="col-sm-12 col-md-7">
